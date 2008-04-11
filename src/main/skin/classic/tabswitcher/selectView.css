@@ -1,0 +1,8 @@
+.viewListChildren::-moz-tree-cell-text(selectedItem) {
+  font-weight: bold;
+}
+
+#view-path {
+  -moz-appearance: none;
+  border: none;
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE overlay SYSTEM "chrome://tabswitcher/locale/tabswitcher.dtd" >
+
+<overlay id="tabswitchOverlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+<script type="application/x-javascript"
+        src="chrome://tabswitcher/content/tabswitchOverlay.js" />
+
+    <broadcasterset id="broadcasterset_global">
+      <broadcaster
+        id="cmd_tabswitcher_show"
+        key="key_cmd_tabswitcher_show"
+        desc="&switchView.desc;"
+        oncommand="gTabSwitcher.onShow(event)"/>
+    </broadcasterset>
+
+    <menupopup id="popup_window">
+        <menuitem id="tabswitcher-select-view"
+                    class="menuitem-iconic-wide"
+                    label="&menuitem-tabswitcher-select-view.label;"
+                    command="cmd_tabswitcher_show"
+                    key="key_cmd_tabswitcher_show"
+                    insertbefore="window-menu-separator"/>
+    </menupopup>
+</overlay>
+   
