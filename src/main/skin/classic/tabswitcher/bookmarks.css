@@ -1,0 +1,15 @@
+.button-viewswitcher-refresh {
+  list-style-image: url("chrome://tabswitcher/skin/refresh.png");
+}
+
+.button-viewswitcher-remove-selected {
+  list-style-image: url("chrome://tabswitcher/skin/remove-selected.png");
+}
+
+.button-viewswitcher-remove-all {
+  list-style-image: url("chrome://tabswitcher/skin/remove-all.png");
+}
+
+.button-viewswitcher-goto-last-edit {
+  list-style-image: url("chrome://tabswitcher/skin/goto-last-edit.png");
+}

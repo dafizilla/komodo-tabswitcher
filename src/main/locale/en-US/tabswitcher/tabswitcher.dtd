@@ -1,3 +1,6 @@
 <!ENTITY switchView.desc "TabSwitcher: Switch View...">
 <!ENTITY menuitem-tabswitcher-select-view.label "Switch View...">
 <!ENTITY switchView.dialog.title "Switch To View">
+
+<!ENTITY goto.last.edit.position.desc "TabSwitcher: Go To Last Edit Position">
+<!ENTITY toolbar.goto.last.edit.position.tooltip "Go To Last Edit Position">

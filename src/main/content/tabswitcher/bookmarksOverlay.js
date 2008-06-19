@@ -35,28 +35,34 @@
 # ***** END LICENSE BLOCK *****
 */
 
-var gTabSwitcher = {
-    editStack : [],
-
+var gViewSwitcherBookmarks = {
     onLoad : function() {
         try {
+            this.treeView = new BookmarksTreeView(
+                    document.getElementById("viewswitcher_bookmarks-tree"));
             var obs = DafizillaCommon.getObserverService();
-            obs.addObserver(this, "current_view_check_status", false);
+            obs.addObserver(this, "view_opened", false);
+            obs.addObserver(this, "view_closed", false);
         } catch (err) {
-            alert("gTabSwitcher onLoad " + err);
+            alert("gViewSwitcherBookmarks onLoad " + err);
         }
     },
 
     onUnLoad : function() {
         var obs = DafizillaCommon.getObserverService();
-        obs.addObserver(this, "current_view_check_status", false);
+        obs.addObserver(this, "view_opened", false);
+        obs.removeObserver(this, "view_closed");
     },
 
     observe : function(subject, topic, data) {
         try {
         switch (topic) {
-            case "current_view_check_status":
-                this.pushEdit();
+            case "view_opened":
+                var status = document.getElementById("viewswitcher-bookmark-status");
+                status.setAttribute("value", subject.document)
+                break;
+            case "view_closed":
+                this.onRefresh();
                 break;
         }
         } catch (err) {
@@ -64,51 +70,35 @@ var gTabSwitcher = {
         }
     },
 
-    pushEdit : function() {
-        var currView = ko.views.manager.currentView;
-    
-        if (!currView.document) {
-            return;
-        }
-            
-        if (!currView.document.isDirty) {
-            DafizillaCommon.log("no dirty");
-            return;
-        }
-    
-        var scimoz = currView.scintilla.scimoz;
-        var last = null;
+    onRefresh : function() {
+        this.treeView.fillBookmarksArray();
+        this.treeView.refresh();
+        var status = document.getElementById("viewswitcher-bookmark-status");
 
-        if (this.editStack.length) {
-            var last = this.editStack[this.editStack.length - 1];
+        var label = "";
+        if (this.treeView.viewWithBookmarkCount) {
+            label = status.getAttribute("bookmarklabel")
+                            .replace("%1", this.treeView.items.length)
+                            .replace("%2", this.treeView.viewWithBookmarkCount)
+                            .replace("%3", this.treeView.viewCount);
         }
-        if (last && last.view == currView) {
-            last.position = scimoz.currentPos;
-        } else {
-            this.editStack.push({ view : currView, position : scimoz.currentPos});
-        }
-    },
-    
-    popEdit : function() {
-        if (!this.editStack.length) {
-            return;
-        }
-        var editPos = this.editStack[this.editStack.length - 1];
-    
-        if (editPos) {
-            editPos.view.makeCurrent();
-            var scimoz = editPos.view.scintilla.scimoz;
-            scimoz.setSel(-1, editPos.position);
-            this.editStack.pop();
-        }
+        status.setAttribute("value", label);
     },
 
-    onShowSelectView : function(event) {
-        window.openDialog("chrome://tabswitcher/content/selectView.xul",
-                          "_blank",
-                          "chrome,modal,resizable=yes,dependent=yes");
+    onRemoveSelected : function() {
+        this.treeView.removeSelectedBookmarks();
+        this.onRefresh();
+    },
+
+    onRemoveAll : function() {
+        this.treeView.removeAllBookmarks();
+        this.onRefresh();
+    },
+
+    onDblClick : function() {
+        this.treeView.moveToSelectedBookmark();
     }
 }
 
-window.addEventListener("load", function(event) {gTabSwitcher.onLoad(event)}, false);
-window.addEventListener("unload", function(event) {gTabSwitcher.onUnLoad(event)}, false);
+window.addEventListener("load", function(event) {gViewSwitcherBookmarks.onLoad(event)}, false);
+window.addEventListener("unload", function(event) {gViewSwitcherBookmarks.onUnLoad(event)}, false);

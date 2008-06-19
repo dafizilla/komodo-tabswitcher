@@ -1,0 +1,8 @@
+<!ENTITY viewswitcher.bookmark.tab.title "Bookmark List">
+<!ENTITY viewswitcher.bookmark.refresh.tooltip "Refresh Bookmark List">
+<!ENTITY viewswitcher.bookmark.remove.selected.label "Remove Selected Bookmarks">
+<!ENTITY viewswitcher.bookmark.remove.all.label "Remove All Bookmarks">
+<!ENTITY viewswitcher.bookmark.file.label "File">
+<!ENTITY viewswitcher.bookmark.line.number.label "Line">
+<!ENTITY viewswitcher.bookmark.line.content.label "Content">
+<!ENTITY viewswitcher.bookmark.found "Found &#37;1 bookmark(s) in &#37;2 of &#37;3 view(s)">

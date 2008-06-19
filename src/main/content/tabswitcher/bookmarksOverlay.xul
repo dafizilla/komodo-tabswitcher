@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE overlay SYSTEM "chrome://tabswitcher/locale/bookmarks.dtd">
+<?xml-stylesheet href="chrome://tabswitcher/skin/bookmarks.css" type="text/css"?>
+
+<overlay id="viewSwitcherBookmarkOverlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <!-- Komodo specific code -->
+  <script type="application/x-javascript"
+          src="chrome://komodo/content/library/logging.js" />
+  <script type="application/x-javascript"
+          src="chrome://komodo/content/library/uilayout.js" />
+
+  <script type="application/x-javascript"
+          src="chrome://tabswitcher/content/common.js" />
+  <script type="application/x-javascript"
+          src="chrome://tabswitcher/content/bookmarksTreeview.js" />
+  <script type="application/x-javascript"
+          src="chrome://tabswitcher/content/bookmarksOverlay.js" />
+
+    <menupopup id="menu_view_tabs_popup">
+        <menuitem id="show_viewswitcher_bookmarks_tab2"
+            observes="show_viewswitcher_bookmarks_tab"
+            class="menuitem-iconic-wide"
+            oncommand="ko.uilayout.ensureTabShown('viewswitcher_bookmarks_tab', true)"
+            label="&viewswitcher.bookmark.tab.title;"
+            />
+    </menupopup>
+
+    <tabs id="output_tabs">
+        <!-- From Todo extensio: Need both onmousedown and onfocus to catch selection
+             by mouse and Ctrl[+Shift]+Tab -->
+        <tab id="viewswitcher_bookmarks_tab"
+             label="&viewswitcher.bookmark.tab.title;"
+             onmousedown="document.getElementById('viewswitcher_bookmarks-treechildren').focus();"
+             onfocus="document.getElementById('viewswitcher_bookmarks-treechildren').focus();" />
+    </tabs>
+
+    <tabpanels id="output_tabpanels">
+        <tabpanel id="viewswitcher_bookmarks_tabpanel"
+                  orient="vertical"
+                  flex="1">
+
+            <vbox flex="1">
+                <hbox align="center">
+                    <label id="viewswitcher-bookmark-status"
+                           flex="1"
+                           bookmarklabel="&viewswitcher.bookmark.found;"/>
+                    <separator flex="1"/>
+                    <button id="viewswitcher_bookmarks-refresh"
+                            class="button-viewswitcher-refresh button-toolbar-a"
+                            tooltiptext="&viewswitcher.bookmark.refresh.tooltip;"
+                            oncommand="gViewSwitcherBookmarks.onRefresh();"/>
+                    <button id="viewswitcher_bookmarks-remove-selected"
+                            class="button-viewswitcher-remove-selected button-toolbar-a"
+                            tooltiptext="&viewswitcher.bookmark.remove.selected.label;"
+                            oncommand="gViewSwitcherBookmarks.onRemoveSelected();"/>
+                    <button id="viewswitcher_bookmarks-remove-all"
+                            class="button-viewswitcher-remove-all button-toolbar-a"
+                            tooltiptext="&viewswitcher.bookmark.remove.all.label;"
+                            oncommand="gViewSwitcherBookmarks.onRemoveAll();"/>
+                </hbox>
+            <tree id="viewswitcher_bookmarks-tree"
+                  flex="1"
+                  seltype="multiple">
+                <treecols>
+                    <treecol primary="true"
+                             crop="center"
+                             flex="8"
+                             persist="width"
+                             id="viewswitcher_bookmarks-filename"
+                             label="&viewswitcher.bookmark.file.label;" />
+                    <splitter class="tree-splitter" />
+                    <treecol id="viewswitcher_bookmarks-linenum"
+                             label="&viewswitcher.bookmark.line.number.label;"
+                             persist="width"/>
+                    <splitter class="tree-splitter" />
+                    <treecol id="viewswitcher_bookmarks-content"
+                             flex="12"
+                             label="&viewswitcher.bookmark.line.content.label;"
+                             persist="width" />
+                </treecols>
+                <treechildren id="viewswitcher_bookmarks-treechildren"
+                              flex="1"
+                              ondblclick="gViewSwitcherBookmarks.onDblClick();"/>
+            </tree>
+            </vbox>
+        </tabpanel>
+    </tabpanels>
+    
+</overlay>
+   

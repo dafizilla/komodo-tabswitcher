@@ -13,8 +13,27 @@
         id="cmd_tabswitcher_show"
         key="key_cmd_tabswitcher_show"
         desc="&switchView.desc;"
-        oncommand="gTabSwitcher.onShow(event)"/>
+        oncommand="gTabSwitcher.onShowSelectView(event)"/>
+      
+      <broadcaster
+        id="cmd_tabswitcher_goto_last_edit_position"
+        key="key_cmd_tabswitcher_goto_last_edit_position"
+        desc="&goto.last.edit.position.desc;"
+        oncommand="gTabSwitcher.popEdit();"/>
     </broadcasterset>
+
+    <toolboxrow id="main-toolboxrow">
+      <toolbar id="standardToolbar">
+          <toolbarbutton id="button-viewswitcher-gotolastedit"
+               persist="buttonstyle"
+               class="button-viewswitcher-goto-last-edit"
+               buttonstyle="pictures"
+               insertbefore="pasteButton"
+               tooltiptext="&toolbar.goto.last.edit.position.tooltip;"
+               observes="cmd_tabswitcher_goto_last_edit_position">
+          </toolbarbutton>
+      </toolbar>
+    </toolboxrow>
 
     <menupopup id="popup_window">
         <menuitem id="tabswitcher-select-view"
