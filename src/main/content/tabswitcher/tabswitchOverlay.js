@@ -72,7 +72,6 @@ var gTabSwitcher = {
         }
             
         if (!currView.document.isDirty) {
-            DafizillaCommon.log("no dirty");
             return;
         }
     
@@ -95,12 +94,26 @@ var gTabSwitcher = {
         }
         var editPos = this.editStack[this.editStack.length - 1];
     
-        if (editPos) {
-            editPos.view.makeCurrent();
-            var scimoz = editPos.view.scintilla.scimoz;
-            scimoz.setSel(-1, editPos.position);
-            this.editStack.pop();
+        if (!editPos) {
+            return;
         }
+
+        var currView = ko.views.manager.currentView;
+        if (currView.document) {
+            var currPos = currView.scintilla.scimoz.currentPos;
+            
+            // If cursor is over last modification skip it and move to previous one
+            if (currView == editPos.view && currPos == editPos.position) {
+                this.editStack.pop();
+            }
+        }
+        if (!editPos) {
+            return;
+        }
+        editPos = this.editStack.pop();
+        editPos.view.makeCurrent();
+        var scimoz = editPos.view.scintilla.scimoz;
+        scimoz.setSel(-1, editPos.position);
     },
 
     onShowSelectView : function(event) {
