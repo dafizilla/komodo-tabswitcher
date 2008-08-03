@@ -14,7 +14,7 @@
 #
 # The Initial Developer of the Original Code is
 # Davide Ficano.
-# Portions created by the Initial Developer are Copyright (C) 2007
+# Portions created by the Initial Developer are Copyright (C) 2008
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s):
@@ -34,21 +34,42 @@
 #
 # ***** END LICENSE BLOCK *****
 */
-
-function DafizillaCommon() {
+function DafizillaPrefs(prefix) {
+    this.prefBranch = Components.classes["@mozilla.org/preferences-service;1"]
+        .getService(Components.interfaces.nsIPrefService)
+        .getBranch(prefix);
+    this.prefBranch.QueryInterface(Components.interfaces.nsIPrefBranch2);
 }
+    
+DafizillaPrefs.prototype = {
+    getString : function(prefName, defValue) {
+        var prefValue;
+        try {
+            prefValue = this.prefBranch.getCharPref(prefName);
+        } catch (ex) {
+            prefValue = null;
+        }
+        return prefValue == null ? defValue : prefValue;
+    },
+    
+    setString : function(prefName, prefValue) {
+        this.prefBranch.setCharPref(prefName, prefValue);
+    },
 
-DafizillaCommon.getObserverService = function () {
-    const CONTRACTID_OBSERVER = "@mozilla.org/observer-service;1";
-    const nsObserverService = Components.interfaces.nsIObserverService;
+    getBool : function(prefName, defValue) {
+        var prefValue = false;
+        try {
+            prefValue = this.prefBranch.getBoolPref(prefName);
+        } catch (ex) {
+            if (defValue != undefined) {
+                prefValue = defValue;
+            }
+        }
 
-    return Components.classes[CONTRACTID_OBSERVER].getService(nsObserverService);
-}
+        return prefValue;
+    },
 
-DafizillaCommon.log = function(msg) {
-    ko.logging.getLogger("extensions.tabswitcher").warn(msg);
-}
-
-DafizillaCommon.createPrefs = function() {
-    return new DafizillaPrefs("extensions.tabswitcher.");
+    setBool : function(prefName, prefValue) {
+        this.prefBranch.setBoolPref(prefName, prefValue);
+    }
 }

@@ -4,3 +4,8 @@
 
 <!ENTITY goto.last.edit.position.desc "TabSwitcher: Go To Last Edit Position">
 <!ENTITY toolbar.goto.last.edit.position.tooltip "Go To Last Edit Position">
+
+<!ENTITY match.case.label "Match Case">
+<!ENTITY match.case.accesskey "c">
+<!ENTITY smart.case.label "Smart Case">
+<!ENTITY smart.case.accesskey "c">

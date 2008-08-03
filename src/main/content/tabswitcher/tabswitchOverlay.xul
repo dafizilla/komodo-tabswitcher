@@ -28,7 +28,7 @@
                persist="buttonstyle"
                class="button-viewswitcher-goto-last-edit"
                buttonstyle="pictures"
-               insertbefore="pasteButton"
+               insertbefore="undoButton"
                tooltiptext="&toolbar.goto.last.edit.position.tooltip;"
                observes="cmd_tabswitcher_goto_last_edit_position">
           </toolbarbutton>

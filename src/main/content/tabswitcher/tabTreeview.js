@@ -175,12 +175,22 @@ TabTreeView.prototype = {
         this.treebox.invalidate();
     },
 
-    selectText : function(str) {
+    selectText : function(str, caseType) {
         var selectedItems = [];
-        // If str contains at least one uppercase character uses case sensitive search
-        var isCaseInsensitiveSearch = /[A-Z]+/.test(str);
 
-        var re = new PatternMatcher.strategies.globCaseContains(str, isCaseInsensitiveSearch);
+        switch (caseType) {
+            case "ic":
+                matchCase = false;
+                break;
+            case "mc":
+                matchCase = true;
+                break;
+            case "sc":
+                matchCase = /[A-Z]+/.test(str);
+                break;
+        }
+
+        var re = new PatternMatcher.strategies.globCaseContains(str, matchCase);
         for (var i = 0; i < this.allItems.length; i++) {
             var title = this.allItems[i].title;
             

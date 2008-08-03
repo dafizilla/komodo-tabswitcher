@@ -38,20 +38,53 @@ var gSelectView = {
     onLoad : function() {
         try {
             this.isInputInProgress = false;
-            this.ko = parent.opener.ko;
             this.tabTreeView = new TabTreeView(
                         document.getElementById("view-tree"),
-                        this.ko.views.manager.topView.getDocumentViews(true));
+                        ko.windowManager.getMainWindow().ko.views.manager.topView.getDocumentViews(true));
             this.tabTreeView.refresh();
             document.getElementById("view-title").focus();
+            
+            this.caseCheckbox = document.getElementById("switch-case");
+
+            this.prefs = DafizillaCommon.createPrefs();
+            this.setSearchCase(this.prefs.getString("caseType", "ic"));
         } catch (err) {
             alert(err);
         }
     },
+
+    toogleSearchCase : function (event) {
+        switch (this.caseCheckbox.value) {
+            case "ic":
+                this.setSearchCase("mc");
+                break;
+            case "mc":
+                this.setSearchCase("sc");
+                break;
+            case "sc":
+                this.setSearchCase("ic");
+                break;
+            default:
+                return;
+        }
+        this.onInput(document.getElementById("view-title"));
+    },
     
+    setSearchCase : function(caseType, optionCaseType) {
+        var isCaseTypeValid = caseType == "ic" || caseType == "mc" || caseType == "sc";
+        
+        if (!isCaseTypeValid) {
+            caseType = "ic";
+        }
+        this.caseCheckbox.label = this.caseCheckbox.getAttribute("label-" + caseType);
+        this.caseCheckbox.value = this.caseCheckbox.getAttribute("value-" + caseType);
+        this.caseCheckbox.accessKey = this.caseCheckbox.getAttribute("accessKey-" + caseType);
+        this.caseCheckbox.checked = this.caseCheckbox.getAttribute("checked-" + caseType) == "true";
+    },
+
     onInput : function(text) {
         this.isInputInProgress = true;
-        this.tabTreeView.selectText(text.value);
+        this.tabTreeView.selectText(text.value, this.caseCheckbox.value);
         this.tabTreeView.refresh();
         this.tabTreeView.selectAndEnsureVisible(0);
 
@@ -104,6 +137,8 @@ var gSelectView = {
         if (this.tabTreeView.currentSelectedItem) {
             this.tabTreeView.currentSelectedItem.makeCurrent();
         }
+        this.prefs.setString("caseType", this.caseCheckbox.value);
+
         window.close();
     }
 }

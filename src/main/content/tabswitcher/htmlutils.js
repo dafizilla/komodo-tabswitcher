@@ -327,8 +327,8 @@ PatternMatcher.strategies = {
      * Identical to globContains but allows case insensitive search
      * 29/Mar/2008 Added by davide ficano <davide.ficano@gmail.com>
      */
-    globCaseContains: function(globString, isCaseInsensitive) {
-        if (isCaseInsensitive) {
+    globCaseContains: function(globString, matchCase) {
+        if (matchCase) {
           this.regexp = new RegExp(PatternMatcher.regexpFromGlobContains(globString));
         } else {
           this.regexp = new RegExp(PatternMatcher.regexpFromGlobContains(globString), "i");

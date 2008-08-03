@@ -13,6 +13,14 @@
     persist="screenX screenY width height"
     onkeypress="return gSelectView.onWindowKeyPress(event)">
 
+    <!-- Komodo specific code -->
+    <script type="application/x-javascript"
+            src="chrome://komodo/content/library/logging.js" />
+    <script type="application/x-javascript"
+            src="chrome://komodo/content/library/windowManager.js" />
+
+    <script type="application/x-javascript" src="chrome://tabswitcher/content/commonPrefs.js" />
+    <script type="application/x-javascript" src="chrome://tabswitcher/content/common.js" />
     <script type="application/x-javascript" src="chrome://tabswitcher/content/htmlutils.js" />
     <script type="application/x-javascript" src="chrome://tabswitcher/content/tabTreeview.js" />
     <script type="application/x-javascript" src="chrome://tabswitcher/content/selectView.js" />
@@ -21,6 +29,13 @@
         <textbox id="view-title"
                   oninput="return gSelectView.onInput(this)"
                   onkeypress="return gSelectView.onKeyPress(event)"/>
+        <checkbox id="switch-case"
+                  oncommand="gSelectView.toogleSearchCase(event)"
+                  label="&match.case.label;" value="ic" accesskey="&match.case.accesskey;" checked="false"
+                  label-ic="&match.case.label;" value-ic="ic" accessKey-ic="&match.case.accesskey;" checked-ic="false"
+                  label-mc="&match.case.label;" value-mc="mc" accessKey-mc="&match.case.accesskey;" checked-mc="true"
+                  label-sc="&smart.case.label;" value-sc="sc" accessKey-sc="&smart.case.accesskey;" checked-sc="true"
+                  />
         <textbox id="view-path" readonly="true"/>
         <tree id="view-tree"
                 flex="1"
