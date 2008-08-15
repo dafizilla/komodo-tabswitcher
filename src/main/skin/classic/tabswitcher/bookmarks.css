@@ -13,3 +13,18 @@
 .button-viewswitcher-goto-last-edit {
   list-style-image: url("chrome://tabswitcher/skin/goto-last-edit.png");
 }
+
+.button-viewswitcher-goto-last-edit[disabled="true"] {
+  list-style-image: url("chrome://tabswitcher/skin/goto-last-edit.png");
+  -moz-opacity: 0.5;
+}
+
+.button-viewswitcher-goto-next-edit {
+  list-style-image: url("chrome://tabswitcher/skin/goto-next-edit.png");
+}
+
+.button-viewswitcher-goto-next-edit[disabled="true"] {
+  list-style-image: url("chrome://tabswitcher/skin/goto-next-edit.png");
+  -moz-opacity: 0.5;
+}
+

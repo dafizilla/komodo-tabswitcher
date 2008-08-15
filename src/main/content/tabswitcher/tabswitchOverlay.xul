@@ -5,8 +5,12 @@
 <overlay id="tabswitchOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-<script type="application/x-javascript"
-        src="chrome://tabswitcher/content/tabswitchOverlay.js" />
+  <script type="application/x-javascript"
+          src="chrome://tabswitcher/content/common.js" />
+  <script type="application/x-javascript"
+          src="chrome://tabswitcher/content/arrays.js" />
+  <script type="application/x-javascript"
+          src="chrome://tabswitcher/content/tabswitchOverlay.js" />
 
     <broadcasterset id="broadcasterset_global">
       <broadcaster
@@ -19,7 +23,15 @@
         id="cmd_tabswitcher_goto_last_edit_position"
         key="key_cmd_tabswitcher_goto_last_edit_position"
         desc="&goto.last.edit.position.desc;"
+        disabled="true"
         oncommand="gTabSwitcher.popEdit();"/>
+
+      <broadcaster
+        id="cmd_tabswitcher_goto_next_edit_position"
+        key="key_cmd_tabswitcher_goto_next_edit_position"
+        desc="&goto.next.edit.position.desc;"
+        disabled="true"
+        oncommand="gTabSwitcher.moveNextEdit();"/>
     </broadcasterset>
 
     <toolboxrow id="main-toolboxrow">
@@ -31,6 +43,14 @@
                insertbefore="undoButton"
                tooltiptext="&toolbar.goto.last.edit.position.tooltip;"
                observes="cmd_tabswitcher_goto_last_edit_position">
+          </toolbarbutton>
+          <toolbarbutton id="button-viewswitcher-nextedit"
+               persist="buttonstyle"
+               class="button-viewswitcher-goto-next-edit"
+               buttonstyle="pictures"
+               insertbefore="undoButton"
+               tooltiptext="&toolbar.goto.next.edit.position.tooltip;"
+               observes="cmd_tabswitcher_goto_next_edit_position">
           </toolbarbutton>
       </toolbar>
     </toolboxrow>
