@@ -196,7 +196,11 @@ BookmarksTreeView.prototype = {
     getCellText : function(row, column) {
         switch (column.id || column) {
             case "viewswitcher_bookmarks-filename":
-                return this.items[row].view.document.file.path;
+                if (ko.views.manager.currentView.document.file) {
+                    return this.items[row].view.document.file.path;
+                } else {
+                    return this.items[row].view.document.displayPath;
+                }
             case "viewswitcher_bookmarks-linenum":
                 return this.items[row].line + 1;
             case "viewswitcher_bookmarks-content":
