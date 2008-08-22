@@ -6,6 +6,10 @@
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
   <script type="application/x-javascript"
+          src="chrome://tabswitcher/content/commonPrefs.js" />
+  <script type="application/x-javascript"
+          src="chrome://tabswitcher/content/prefs.js" />
+  <script type="application/x-javascript"
           src="chrome://tabswitcher/content/common.js" />
   <script type="application/x-javascript"
           src="chrome://tabswitcher/content/arrays.js" />
@@ -24,14 +28,20 @@
         key="key_cmd_tabswitcher_goto_last_edit_position"
         desc="&goto.last.edit.position.desc;"
         disabled="true"
-        oncommand="gTabSwitcher.popEdit();"/>
+        oncommand="gTabSwitcher.goToLastEdit(0);"/>
 
       <broadcaster
         id="cmd_tabswitcher_goto_next_edit_position"
         key="key_cmd_tabswitcher_goto_next_edit_position"
         desc="&goto.next.edit.position.desc;"
         disabled="true"
-        oncommand="gTabSwitcher.moveNextEdit();"/>
+        oncommand="gTabSwitcher.goToNextEdit(0);"/>
+
+      <broadcaster
+        id="cmd_tabswitcher_edit_position_remove_all"
+        key="key_cmd_tabswitcher_edit_position_remove_all"
+        desc="&edit.position.remove.all.desc;"
+        oncommand="gTabSwitcher.removeAll();"/>
     </broadcasterset>
 
     <toolboxrow id="main-toolboxrow">
@@ -41,16 +51,38 @@
                class="button-viewswitcher-goto-last-edit"
                buttonstyle="pictures"
                insertbefore="undoButton"
+               type="menu-button"
                tooltiptext="&toolbar.goto.last.edit.position.tooltip;"
                observes="cmd_tabswitcher_goto_last_edit_position">
+                <menupopup id="gotolastedit-toolbarMenuPopup"
+                           onpopupshowing="gTabSwitcher.initLastEditPopupMenu('gotolastedit');"
+                           oncommand="event.stopPropagation();">
+                    <vbox id="gotolastedit-menubox" />
+                    <menuseparator id="gotolastedit-menuseparator" />
+                    <menuitem id="gotolastedit-removeall-menuitem"
+                              label="&edit.position.remove.all.label;"
+                              tooltiptext="&edit.position.remove.all.label;"
+                              command="cmd_tabswitcher_edit_position_remove_all" />
+                </menupopup>
           </toolbarbutton>
           <toolbarbutton id="button-viewswitcher-nextedit"
                persist="buttonstyle"
                class="button-viewswitcher-goto-next-edit"
                buttonstyle="pictures"
                insertbefore="undoButton"
+               type="menu-button"
                tooltiptext="&toolbar.goto.next.edit.position.tooltip;"
                observes="cmd_tabswitcher_goto_next_edit_position">
+                <menupopup id="gotolastedit-toolbarMenuPopup"
+                           onpopupshowing="gTabSwitcher.initNextEditPopupMenu('gotonextedit');"
+                           oncommand="event.stopPropagation();">
+                    <vbox id="gotonextedit-menubox" />
+                    <menuseparator id="gotonextedit-menuseparator" />
+                    <menuitem id="gotonextedit-removeall-menuitem"
+                              label="&edit.position.remove.all.label;"
+                              tooltiptext="&edit.position.remove.all.label;"
+                              command="cmd_tabswitcher_edit_position_remove_all" />
+                </menupopup>
           </toolbarbutton>
       </toolbar>
     </toolboxrow>

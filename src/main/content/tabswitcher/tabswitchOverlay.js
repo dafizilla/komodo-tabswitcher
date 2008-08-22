@@ -36,21 +36,34 @@
 */
 
 var gTabSwitcher = {
-    editStack : new FixedSizeStack(100),
-    nextEditStack : new FixedSizeStack(100),
+    lastEditStack : new FixedSizeStack(10),
+    nextEditStack : new FixedSizeStack(10),
 
     onLoad : function() {
         try {
             var obs = DafizillaCommon.getObserverService();
             obs.addObserver(this, "current_view_check_status", false);
+            obs.addObserver(this, "view_closed", false);
+            obs.addObserver(this, "tabswitcher_pref_changed", false);
+            
+            this.prefs = new TabSwitcherPrefs();
+            this.init();
         } catch (err) {
             alert("gTabSwitcher onLoad " + err);
         }
     },
 
+    init : function() {
+        this.prefs.load();
+        this.lastEditStack.resize(this.prefs.maxSizeEditPositionStack);
+        this.nextEditStack.resize(this.prefs.maxSizeEditPositionStack);
+    },
+
     onUnLoad : function() {
         var obs = DafizillaCommon.getObserverService();
-        obs.addObserver(this, "current_view_check_status", false);
+        obs.removeObserver(this, "current_view_check_status");
+        obs.removeObserver(this, "view_closed");
+        obs.removeObserver(this, "tabswitcher_pref_changed");
     },
 
     observe : function(subject, topic, data) {
@@ -59,9 +72,25 @@ var gTabSwitcher = {
             case "current_view_check_status":
                 this.pushEdit();
                 break;
+            case "view_closed":
+                this.removeView(subject, this.lastEditStack.items);
+                this.removeView(subject, this.nextEditStack.items);
+                this.updateCommands();
+                break;
+            case "tabswitcher_pref_changed":
+                this.init();
         }
         } catch (err) {
             alert(topic + "--" + data + "\n" + err);
+        }
+    },
+
+    removeView : function(view, arr) {
+        for (var i = arr.length - 1; i >= 0; i--) {
+            if (arr[i].view == view) {
+                DafizillaCommon.log("Removing " + i);
+                arr.splice(i, 1);
+            }
         }
     },
 
@@ -79,53 +108,50 @@ var gTabSwitcher = {
         var scimoz = currView.scintilla.scimoz;
         var last = null;
 
-        if (this.editStack.length) {
-            var last = this.editStack.peek();
+        if (this.lastEditStack.length) {
+            var last = this.lastEditStack.peek();
         }
 
         if (last && last.view == currView) {
             last.position = scimoz.currentPos;
         } else {
-            if (!this.isEditOnCurrentView(this.editStack.peek())) {
-                this.editStack.push({ view : currView, position : scimoz.currentPos});
+            if (!this.isEditOnCurrentView(this.lastEditStack.peek())) {
+                DafizillaCommon.log(">>>Pushing " + currView.title);
+                this.lastEditStack.push({ view : currView, position : scimoz.currentPos});
                 this.updateCommands();
             }
         }
     },
     
-    popEdit : function() {
-        DafizillaCommon.log("***before popEdit");
-        DafizillaCommon.log("\neditStack\n" + this.editStack);
-        DafizillaCommon.log("\nnextEditStack\n" + this.nextEditStack);
+    goToLastEdit : function(index) {
+        DafizillaCommon.log("***before goToLastEdit\n"
+            + "\neditStack\n"
+            + "\nnextEditStack\n");
 
-        if (this._popEditPosition(this.editStack, this.nextEditStack)) {
-            this.updateCommands();
-        }
+        this._popEditPosition(this.lastEditStack, index, this.nextEditStack);
 
-        DafizillaCommon.log("***after popEdit");
-        DafizillaCommon.log("\neditStack\n" + this.editStack);
-        DafizillaCommon.log("\nnextEditStack\n" + this.nextEditStack);
+        DafizillaCommon.log("***after goToLastEdit\n"
+            + "\neditStack\n" + this.lastEditStack
+            + "\nnextEditStack\n" + this.nextEditStack);
     },
 
-    moveNextEdit : function() {
-        DafizillaCommon.log("+++before moveNextEdit");
-        DafizillaCommon.log("\neditStack\n" + this.editStack);
-        DafizillaCommon.log("\nnextEditStack\n" + this.nextEditStack);
+    goToNextEdit : function(index) {
+        DafizillaCommon.log("+++before goToNextEdit\n"
+            + "\neditStack\n" + this.lastEditStack
+            + "\nnextEditStack\n" + this.nextEditStack);
 
-        if (this._popEditPosition(this.nextEditStack, this.editStack)) {
-            this.updateCommands();
-        }
+        this._popEditPosition(this.nextEditStack, index, this.lastEditStack);
 
-        DafizillaCommon.log("+++after moveNextEdit");
-        DafizillaCommon.log("\neditStack\n" + this.editStack);
-        DafizillaCommon.log("\nnextEditStack\n" + this.nextEditStack);
+        DafizillaCommon.log("+++after goToNextEdit\n"
+            + "\neditStack\n" + this.lastEditStack
+            + "\nnextEditStack\n" + this.nextEditStack);
     },
     
     updateCommands : function() {
-        this.enable("cmd_tabswitcher_goto_last_edit_position", this.editStack.length > 0);
+        this.enable("cmd_tabswitcher_goto_last_edit_position", this.lastEditStack.length > 0);
         this.enable("cmd_tabswitcher_goto_next_edit_position", this.nextEditStack.length > 0);
-        DafizillaCommon.log("\nupdateCommands editStack = "
-                            + this.editStack.length
+        DafizillaCommon.log("\nupdateCommands lastEditStack = "
+                            + this.lastEditStack.length
                             + " nextEditStack " + this.nextEditStack.length);
     },
     
@@ -141,50 +167,102 @@ var gTabSwitcher = {
         }
     },
     
-    _popEditPosition : function(fromArr, toArr) {
-        if (!fromArr.length) {
+    _popEditPosition : function(fromStack, fromIndex, toStack) {
+        try {
+
+
+        DafizillaCommon.log("_popEditPosition1 length = " + fromStack.length + " fromIndex " + fromIndex);
+        if (fromStack.length == 0) {
             return false;
         }
-        var editPos = this.popValidView(fromArr);
+
+        if (fromIndex == 0 && this.isEditOnCurrentView(fromStack.peek())) {
+            fromIndex = 1;
+        DafizillaCommon.log("_popEditPosition2 fromIndex " + fromIndex);
+        }
+
+        // elements are retrieved starting from end of array
+        // if fromIndex < 0 editPos is undefined
+        fromIndex = fromStack.items.length - 1 - fromIndex;
+
+        DafizillaCommon.log("_popEditPosition3 fromIndex " + fromIndex);
+        var editPos = fromStack.items[fromIndex];
     
         if (!editPos) {
             return false;
         }
-
-        if (this.isEditOnCurrentView(editPos)) {
-            // cursor is already on current position so move element to other array
-            // and pop the next element
-            toArr.push(editPos);
-            editPos = this.popValidView(fromArr);
+        
+        var elementToMoveCount = fromStack.items.length;
+        for (var i = elementToMoveCount - 1; i >= fromIndex ; i--) {
+        DafizillaCommon.log("_popEditPosition4 i = " + i + "--" + fromStack.items[i].view.title);
+            toStack.push(fromStack.items[i]);
         }
+        fromStack.items.splice(fromIndex, elementToMoveCount - fromIndex);
+        editPos.view.makeCurrent();
+        var scimoz = editPos.view.scintilla.scimoz;
+        scimoz.setSel(-1, editPos.position);
 
-        if (editPos) {
-            toArr.push(editPos);
-            editPos.view.makeCurrent();
-            var scimoz = editPos.view.scintilla.scimoz;
-            scimoz.setSel(-1, editPos.position);
+        this.updateCommands();
+
+        } catch(e) {
+            DafizillaCommon.log("_popEditPosition err " + e);
         }
         
         return true;
     },
 
-    /**
-     * Ensure the popped element points to a not-closed view
-     */
-    popValidView : function(arr) {
-        while (arr.length) {
-            var editPos = arr.pop();
-            if (editPos && editPos.view.document) {
-                return editPos;
-            }
-        }
-        return null;
+    removeAll : function() {
+        this.lastEditStack.clear();
+        this.nextEditStack.clear();
+        this.updateCommands();
     },
     
+    initLastEditPopupMenu : function(menu) {
+        this.initPopupMenu(menu,
+                           this.lastEditStack,
+                           "gTabSwitcher.goToLastEdit(%1)");
+    },
+    
+    initNextEditPopupMenu : function(menu) {
+        this.initPopupMenu(menu,
+                           this.nextEditStack,
+                           "gTabSwitcher.goToNextEdit(%1)");
+    },
+
+    initPopupMenu : function(menuPrefix, stack, command) {
+        var menu = document.getElementById(menuPrefix + "-menubox");
+        DafizillaCommon.removeMenuItems(menu);
+
+        var items = stack.items;
+        var count = items.length - 1;
+        var index = 0;
+
+        // don't show current view
+        if (this.isEditOnCurrentView(items[count])) {
+            index = 1;
+        }
+        var itemsToAdd = 3;
+        for (; index <= count && itemsToAdd > 0; index++, --itemsToAdd) {
+            var view = items[count - index].view;
+            var mi = document.createElement("menuitem");
+            mi.setAttribute("label", view.title);
+            mi.setAttribute("crop", "center");
+            mi.setAttribute("tooltiptext", view.document.displayPath);
+            mi.setAttribute("oncommand", command.replace("%1", index));
+            menu.appendChild(mi);
+        }
+        
+        if (menu.hasChildNodes()) {
+            document.getElementById(menuPrefix + "-menuseparator")
+                .removeAttribute("collapsed");
+        } else {
+            document.getElementById(menuPrefix + "-menuseparator")
+                .setAttribute("collapsed", "true");
+        }
+    },
+
     isEditOnCurrentView : function(editPos) {
-        DafizillaCommon.log("isEditOnCurrentView1 " + editPos);
         if (editPos) {
-        DafizillaCommon.log("isEditOnCurrentView2 " + editPos.view.title);
             var currView = ko.views.manager.currentView;
     
             if (currView.document) {

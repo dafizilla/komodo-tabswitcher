@@ -37,7 +37,7 @@
 
 function FixedSizeStack(maxItems) {
     this.items = new Array();
-    this.maxItems = maxItems;
+    this.maxItems = maxItems ? maxItems : 100;
 }
 
 FixedSizeStack.prototype = {
@@ -51,10 +51,6 @@ FixedSizeStack.prototype = {
     pop : function() {
         return this.items.pop();
     },
-
-    elementAt : function(index) {
-        return this.items[index];
-    },
     
     peek : function() {
         return this.items[this.items.length - 1];
@@ -63,7 +59,15 @@ FixedSizeStack.prototype = {
     get length() {
         return this.items.length;
     },
-    
+
+    clear : function() {
+        this.items.splice(0, this.items.length);
+    },
+
+    resize : function(newSize) {
+        this.maxItems = newSize;
+    },
+
     toString : function() {
         var arr = new Array();
         for (var i = 0; i < this.items.length; i++) {
