@@ -1,0 +1,6 @@
+<!ENTITY tabswitcher.label "TabSwitcher">
+<!ENTITY edit.position.label "Edit Last Position">
+
+<!ENTITY number.edit.position.store "Number of edit positions to store">
+<!ENTITY number.visible.menu.items "Number of visible menu items">
+
