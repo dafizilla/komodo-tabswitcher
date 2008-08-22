@@ -35,10 +35,12 @@
 # ***** END LICENSE BLOCK *****
 */
 function DafizillaPrefs(prefix) {
-    this.prefBranch = Components.classes["@mozilla.org/preferences-service;1"]
-        .getService(Components.interfaces.nsIPrefService)
-        .getBranch(prefix);
-    this.prefBranch.QueryInterface(Components.interfaces.nsIPrefBranch2);
+    if (prefix) {
+        this.prefBranch = Components.classes["@mozilla.org/preferences-service;1"]
+            .getService(Components.interfaces.nsIPrefService)
+            .getBranch(prefix);
+        this.prefBranch.QueryInterface(Components.interfaces.nsIPrefBranch2);
+    }
 }
     
 DafizillaPrefs.prototype = {
@@ -71,5 +73,40 @@ DafizillaPrefs.prototype = {
 
     setBool : function(prefName, prefValue) {
         this.prefBranch.setBoolPref(prefName, prefValue);
+    },
+    
+    load : function() {
+    },
+
+    save : function() {
     }
+}
+
+DafizillaPrefs.safeInt = function(value, defValue, checkCallback) {
+    var tmpValue;
+
+    if (typeof(value) == "number") {
+        tmpValue = value;
+    } else {
+        tmpValue = parseInt(value);
+        if (isNaN(tmpValue)) {
+            return defValue;
+        }
+    }
+
+    if (typeof(checkCallback) == "function") {
+        if (!checkCallback(tmpValue)) {
+            return defValue;
+        }
+    }
+    return tmpValue;
+}
+
+/////////////
+/// List of checkers routines
+/////////////
+
+DafizillaPrefs.checkers = {};
+DafizillaPrefs.checkers.checkGreaterOrEqualThan = function(value, greaterThanValue) {
+    return value >= greaterThanValue;
 }

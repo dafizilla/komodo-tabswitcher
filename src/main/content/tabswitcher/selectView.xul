@@ -19,8 +19,9 @@
     <script type="application/x-javascript"
             src="chrome://komodo/content/library/windowManager.js" />
 
-    <script type="application/x-javascript" src="chrome://tabswitcher/content/commonPrefs.js" />
     <script type="application/x-javascript" src="chrome://tabswitcher/content/common.js" />
+    <script type="application/x-javascript" src="chrome://tabswitcher/content/commonPrefs.js" />
+    <script type="application/x-javascript" src="chrome://tabswitcher/content/prefs.js" />
     <script type="application/x-javascript" src="chrome://tabswitcher/content/htmlutils.js" />
     <script type="application/x-javascript" src="chrome://tabswitcher/content/tabTreeview.js" />
     <script type="application/x-javascript" src="chrome://tabswitcher/content/selectView.js" />

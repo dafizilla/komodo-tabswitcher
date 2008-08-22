@@ -46,8 +46,9 @@ var gSelectView = {
             
             this.caseCheckbox = document.getElementById("switch-case");
 
-            this.prefs = DafizillaCommon.createPrefs();
-            this.setSearchCase(this.prefs.getString("caseType", "ic"));
+            this.prefs = new TabSwitcherPrefs();
+            this.prefs.load();
+            this.setSearchCase(this.prefs.caseType);
         } catch (err) {
             alert(err);
         }
@@ -137,7 +138,8 @@ var gSelectView = {
         if (this.tabTreeView.currentSelectedItem) {
             this.tabTreeView.currentSelectedItem.makeCurrent();
         }
-        this.prefs.setString("caseType", this.caseCheckbox.value);
+        this.prefs.caseType = this.caseCheckbox.value;
+        this.prefs.save();
 
         window.close();
     }

@@ -49,6 +49,11 @@ DafizillaCommon.log = function(msg) {
     ko.logging.getLogger("extensions.tabswitcher").warn(msg);
 }
 
-DafizillaCommon.createPrefs = function() {
-    return new DafizillaPrefs("extensions.tabswitcher.");
+DafizillaCommon.removeMenuItems = function(menu) {
+    var children = menu.childNodes;
+
+    for (var i = children.length - 1; i >= 0; i--) {
+        menu.removeChild(children[i]);
+    }
 }
+
