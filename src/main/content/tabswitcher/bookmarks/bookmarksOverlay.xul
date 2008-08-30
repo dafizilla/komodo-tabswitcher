@@ -15,9 +15,9 @@
   <script type="application/x-javascript"
           src="chrome://tabswitcher/content/common.js" />
   <script type="application/x-javascript"
-          src="chrome://tabswitcher/content/bookmarksTreeview.js" />
+          src="chrome://tabswitcher/content/bookmarks/bookmarksTreeview.js" />
   <script type="application/x-javascript"
-          src="chrome://tabswitcher/content/bookmarksOverlay.js" />
+          src="chrome://tabswitcher/content/bookmarks/bookmarksOverlay.js" />
 
     <menupopup id="menu_view_tabs_popup">
         <menuitem id="show_viewswitcher_bookmarks_tab2"

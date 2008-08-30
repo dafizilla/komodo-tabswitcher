@@ -14,6 +14,8 @@
   <script type="application/x-javascript"
           src="chrome://tabswitcher/content/arrays.js" />
   <script type="application/x-javascript"
+          src="chrome://tabswitcher/content/editPosition/editPosition.js" />
+  <script type="application/x-javascript"
           src="chrome://tabswitcher/content/tabswitchOverlay.js" />
 
     <broadcasterset id="broadcasterset_global">
@@ -21,27 +23,27 @@
         id="cmd_tabswitcher_show"
         key="key_cmd_tabswitcher_show"
         desc="&switchView.desc;"
-        oncommand="gTabSwitcher.onShowSelectView(event)"/>
+        oncommand="gTabSwitcher.onShowTabSwitcher(event)"/>
       
       <broadcaster
         id="cmd_tabswitcher_goto_last_edit_position"
         key="key_cmd_tabswitcher_goto_last_edit_position"
         desc="&goto.last.edit.position.desc;"
         disabled="true"
-        oncommand="gTabSwitcher.goToLastEdit(0);"/>
+        oncommand="gEditPosition.goToLastEdit(0);"/>
 
       <broadcaster
         id="cmd_tabswitcher_goto_next_edit_position"
         key="key_cmd_tabswitcher_goto_next_edit_position"
         desc="&goto.next.edit.position.desc;"
         disabled="true"
-        oncommand="gTabSwitcher.goToNextEdit(0);"/>
+        oncommand="gEditPosition.goToNextEdit(0);"/>
 
       <broadcaster
         id="cmd_tabswitcher_edit_position_remove_all"
         key="key_cmd_tabswitcher_edit_position_remove_all"
         desc="&edit.position.remove.all.desc;"
-        oncommand="gTabSwitcher.removeAll();"/>
+        oncommand="gEditPosition.removeAll();"/>
     </broadcasterset>
 
     <toolboxrow id="main-toolboxrow">
@@ -55,7 +57,7 @@
                tooltiptext="&toolbar.goto.last.edit.position.tooltip;"
                observes="cmd_tabswitcher_goto_last_edit_position">
                 <menupopup id="gotolastedit-toolbarMenuPopup"
-                           onpopupshowing="gTabSwitcher.initLastEditPopupMenu('gotolastedit');"
+                           onpopupshowing="gEditPosition.initLastEditPopupMenu('gotolastedit');"
                            oncommand="event.stopPropagation();">
                     <vbox id="gotolastedit-menubox" />
                     <menuseparator id="gotolastedit-menuseparator" />
@@ -74,7 +76,7 @@
                tooltiptext="&toolbar.goto.next.edit.position.tooltip;"
                observes="cmd_tabswitcher_goto_next_edit_position">
                 <menupopup id="gotolastedit-toolbarMenuPopup"
-                           onpopupshowing="gTabSwitcher.initNextEditPopupMenu('gotonextedit');"
+                           onpopupshowing="gEditPosition.initNextEditPopupMenu('gotonextedit');"
                            oncommand="event.stopPropagation();">
                     <vbox id="gotonextedit-menubox" />
                     <menuseparator id="gotonextedit-menuseparator" />

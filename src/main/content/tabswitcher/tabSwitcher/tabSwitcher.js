@@ -34,7 +34,7 @@
 #
 # ***** END LICENSE BLOCK *****
 */
-var gSelectView = {
+var gTabSwitcher = {
     onLoad : function() {
         try {
             this.isInputInProgress = false;

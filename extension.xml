@@ -1,5 +1,5 @@
 <!DOCTYPE extension [
-<!ENTITY extension.version "0.4">
+<!ENTITY extension.version "0.4.1">
 ]>
 
 <extension name="tabswitcher">
@@ -40,7 +40,8 @@
 
     <overlays>
         <overlay description="Editor" uri="chrome://komodo/content/komodo.xul" value="chrome://tabswitcher/content/tabswitchOverlay.xul" />
-        <overlay description="Editor" uri="chrome://komodo/content/komodo.xul" value="chrome://tabswitcher/content/bookmarksOverlay.xul" />
+        <overlay description="Editor" uri="chrome://komodo/content/komodo.xul" value="chrome://tabswitcher/content/bookmarks/bookmarksOverlay.xul" />
+        <overlay description="Preferences" uri="chrome://komodo/content/pref/pref.xul" value="chrome://tabswitcher/content/pref/prefOverlay.xul" />
     </overlays>
 
     <compatibility>
@@ -48,14 +49,14 @@
             <description>Komodo IDE</description>
             <id>{36E66FA0-F259-11D9-850E-000D935D3368}</id>
             <minVersion>4.2</minVersion>
-            <maxVersion>4.*</maxVersion>
+            <maxVersion>5.*</maxVersion>
         </application>
         
         <application>
             <description>Komodo Edit</description>
             <id>{b1042fb5-9e9c-11db-b107-000d935d3368}</id>
             <minVersion>4.0</minVersion>
-            <maxVersion>4.*</maxVersion>
+            <maxVersion>5.*</maxVersion>
         </application>
     </compatibility>
 

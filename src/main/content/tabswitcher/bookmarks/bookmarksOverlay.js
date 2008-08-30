@@ -43,6 +43,8 @@ var gViewSwitcherBookmarks = {
             var obs = DafizillaCommon.getObserverService();
             obs.addObserver(this, "view_opened", false);
             obs.addObserver(this, "view_closed", false);
+
+            this.addListeners();
         } catch (err) {
             alert("gViewSwitcherBookmarks onLoad " + err);
         }
@@ -52,14 +54,14 @@ var gViewSwitcherBookmarks = {
         var obs = DafizillaCommon.getObserverService();
         obs.addObserver(this, "view_opened", false);
         obs.removeObserver(this, "view_closed");
+        this.removeListeners();
     },
 
     observe : function(subject, topic, data) {
         try {
         switch (topic) {
             case "view_opened":
-                var status = document.getElementById("viewswitcher-bookmark-status");
-                status.setAttribute("value", subject.document)
+                this.onRefresh();
                 break;
             case "view_closed":
                 this.onRefresh();
@@ -97,6 +99,38 @@ var gViewSwitcherBookmarks = {
 
     onDblClick : function() {
         this.treeView.moveToSelectedBookmark();
+    },
+
+    addListeners : function() {
+        var self = this;
+
+        this.handle_view_opened_setup = function(event) {
+            self.onViewOpened(event);
+        };
+
+        this.handle_view_closed_setup = function(event) {
+            self.onViewClosed(event);
+        };
+
+        window.addEventListener('view_opened',
+                                this.handle_view_opened_setup, false);
+        window.addEventListener('view_closed',
+                                this.handle_view_closed_setup, false);
+    },
+
+    removeListeners : function() {
+        window.removeEventListener('view_opened',
+                                this.handle_view_opened_setup, false);
+        window.removeEventListener('view_closed',
+                                this.handle_view_closed_setup, false);
+    },
+
+    onViewOpened : function(event) {
+        this.onRefresh();
+    },
+
+    onViewClosed : function(event) {
+        this.onRefresh();
     }
 }
 

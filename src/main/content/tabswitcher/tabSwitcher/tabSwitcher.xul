@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-<?xml-stylesheet href="chrome://tabswitcher/skin/selectView.css" type="text/css"?>
+<?xml-stylesheet href="chrome://tabswitcher/skin/tabSwitcher.css" type="text/css"?>
 
 <!DOCTYPE overlay SYSTEM "chrome://tabswitcher/locale/tabswitcher.dtd" >
 
@@ -9,9 +9,9 @@
     title="&switchView.dialog.title;"
     minwidth="300"
     minheight="260"
-    onload="return gSelectView.onLoad();"
+    onload="return gTabSwitcher.onLoad();"
     persist="screenX screenY width height"
-    onkeypress="return gSelectView.onWindowKeyPress(event)">
+    onkeypress="return gTabSwitcher.onWindowKeyPress(event)">
 
     <!-- Komodo specific code -->
     <script type="application/x-javascript"
@@ -23,15 +23,15 @@
     <script type="application/x-javascript" src="chrome://tabswitcher/content/commonPrefs.js" />
     <script type="application/x-javascript" src="chrome://tabswitcher/content/prefs.js" />
     <script type="application/x-javascript" src="chrome://tabswitcher/content/htmlutils.js" />
-    <script type="application/x-javascript" src="chrome://tabswitcher/content/tabTreeview.js" />
-    <script type="application/x-javascript" src="chrome://tabswitcher/content/selectView.js" />
+    <script type="application/x-javascript" src="chrome://tabswitcher/content/tabSwitcher/tabSwitcherTreeview.js" />
+    <script type="application/x-javascript" src="chrome://tabswitcher/content/tabSwitcher/tabSwitcher.js" />
 
     <vbox flex="1">
         <textbox id="view-title"
-                  oninput="return gSelectView.onInput(this)"
-                  onkeypress="return gSelectView.onKeyPress(event)"/>
+                  oninput="return gTabSwitcher.onInput(this)"
+                  onkeypress="return gTabSwitcher.onKeyPress(event)"/>
         <checkbox id="switch-case"
-                  oncommand="gSelectView.toogleSearchCase(event)"
+                  oncommand="gTabSwitcher.toogleSearchCase(event)"
                   label="&match.case.label;" value="ic" accesskey="&match.case.accesskey;" checked="false"
                   label-ic="&match.case.label;" value-ic="ic" accessKey-ic="&match.case.accesskey;" checked-ic="false"
                   label-mc="&match.case.label;" value-mc="mc" accessKey-mc="&match.case.accesskey;" checked-mc="true"
@@ -40,8 +40,8 @@
         <textbox id="view-path" readonly="true"/>
         <tree id="view-tree"
                 flex="1"
-                onselect="gSelectView.onSelect()"
-                ondblclick="gSelectView.onDblClick()"
+                onselect="gTabSwitcher.onSelect()"
+                ondblclick="gTabSwitcher.onDblClick()"
                 hidecolumnpicker="true">
           <treecols>
             <treecol id="view-treecol"
@@ -49,7 +49,7 @@
                       flex="1"
                       persist="width"/>
           </treecols>
-          <treechildren class="viewListChildren" ondblclick="gSelectView.onDblClick(event);"/>
+          <treechildren class="viewListChildren" ondblclick="gTabSwitcher.onDblClick(event);"/>
         </tree>
     </vbox>
 </window>
