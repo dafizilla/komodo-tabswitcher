@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin" type="text/css"?>
+
+<!DOCTYPE window SYSTEM "chrome://tabswitcher/locale/pref.dtd" >
+ 
+<window xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    orient="vertical"
+    onload="switchViewOnLoad();">
+
+  <script type="application/x-javascript"
+          src="chrome://tabswitcher/content/common.js" />
+  <script type="application/x-javascript"
+          src="chrome://tabswitcher/content/commonPrefs.js" />
+  <script type="application/x-javascript"
+          src="chrome://tabswitcher/content/prefs.js" />
+  <script type="application/x-javascript"
+          src="chrome://tabswitcher/content/pref/pref-switchview.js" />
+
+  <groupbox orient="vertical">
+    <caption label="&switch.view.label;"/>
+
+    <checkbox id="showLastUsedPattern" label="&show.last.used.pattern.label;" />
+
+  </groupbox>
+</window>
+ 
+

@@ -40,7 +40,8 @@ var gTabSwitcher = {
             this.isInputInProgress = false;
             this.tabTreeView = new TabTreeView(
                         document.getElementById("view-tree"),
-                        ko.windowManager.getMainWindow().ko.views.manager.topView.getDocumentViews(true));
+                        this.getAllOpenDocumentViews());
+            this.tabTreeView.currentWindow = ko.windowManager.getMainWindow();
             this.tabTreeView.refresh();
             document.getElementById("view-title").focus();
             
@@ -49,11 +50,45 @@ var gTabSwitcher = {
             this.prefs = new TabSwitcherPrefs();
             this.prefs.load();
             this.setSearchCase(this.prefs.caseType);
+
+            if (this.prefs.showLastUsedPattern) {
+                document.getElementById("view-title").value = window.arguments[0].searchPattern;
+                document.getElementById("view-title").select();
+                this.onInput(document.getElementById("view-title"));
+            }
         } catch (err) {
             alert(err);
         }
     },
 
+    getAllOpenDocumentViews : function() {
+        var views = [];
+        var windows = ko.windowManager.getWindows();
+        var winInfo = {
+            win : null,
+            number : 0,
+            hasNumberWindow : windows.length > 1
+        };
+        
+        for (var i in windows) {
+            var w = windows[i];
+
+            winInfo.win = w;
+            ++winInfo.number;
+            var arr = w.ko.views.manager.topView.getDocumentViews(true);
+            arr.forEach(this.addWindowAttribute, winInfo);
+            views = views.concat(arr);
+        }
+        return views;
+    },
+    
+    addWindowAttribute : function(element, index, array) {
+        element._ts_window = this.win;
+        element._ts_title = this.hasNumberWindow
+            ? "[" + this.number + "] " + element.title
+            : element.title;
+    },
+    
     toogleSearchCase : function (event) {
         switch (this.caseCheckbox.value) {
             case "ic":
@@ -123,8 +158,6 @@ var gTabSwitcher = {
         if (!this.isInputInProgress) {
             var selectedItem = this.tabTreeView.currentSelectedItem;
             if (selectedItem) {
-                document.getElementById("view-title").value = selectedItem.title;
-                document.getElementById("view-title").select();
                 document.getElementById("view-path").value = selectedItem.document.file.dirName;
             }
         }
@@ -136,11 +169,15 @@ var gTabSwitcher = {
 
     onAccept : function() {
         if (this.tabTreeView.currentSelectedItem) {
+            this.tabTreeView.currentSelectedItem._ts_window.focus();
             this.tabTreeView.currentSelectedItem.makeCurrent();
         }
         this.prefs.caseType = this.caseCheckbox.value;
         this.prefs.save();
 
+        if (this.prefs.showLastUsedPattern) {
+            window.arguments[0].searchPattern = document.getElementById("view-title").value;
+        }
         window.close();
     }
 }

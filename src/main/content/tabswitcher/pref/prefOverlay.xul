@@ -23,6 +23,14 @@
                                       label="&edit.position.label;"/>
                         </treerow>
                     </treeitem>
+
+                    <treeitem container="false" id="switchView">
+                        <treerow>
+                            <treecell class="treecell-indent"
+                              url="chrome://tabswitcher/content/pref/pref-switchview.xul"
+                                      label="&switch.view.label;"/>
+                        </treerow>
+                    </treeitem>
                 </treechildren>
 
             </treeitem>

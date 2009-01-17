@@ -34,13 +34,27 @@
 #
 # ***** END LICENSE BLOCK *****
 */
+var prefs = new TabSwitcherPrefs();
+var showLastUsedPatternWidget;
 
-var gTabSwitcher = {
-    searchPattern : "",
-    onShowTabSwitcher : function(event) {
-        window.openDialog("chrome://tabswitcher/content/tabSwitcher/tabSwitcher.xul",
-                          "_blank",
-                          "chrome,modal,resizable=yes,dependent=yes",
-                          this);
-    }
+function OnPreferencePageOK(prefset) {
+    prefs.showLastUsedPattern = showLastUsedPatternWidget.checked;
+
+    prefs.save();
+    var obs = DafizillaCommon.getObserverService();
+    obs.notifyObservers(null, "tabswitcher_pref_changed", null);
+    return true;
+}
+
+function OnPreferencePageInitalize(prefset) {
+    showLastUsedPatternWidget = document.getElementById("showLastUsedPattern");
+}
+
+function OnPreferencePageLoading(prefset) {
+    prefs.load();
+    showLastUsedPatternWidget.checked = prefs.showLastUsedPattern;
+}
+
+function switchViewOnLoad() {
+    parent.hPrefWindow.onpageload();
 }

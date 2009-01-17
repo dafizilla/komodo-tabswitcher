@@ -34,9 +34,10 @@
 #
 # ***** END LICENSE BLOCK *****
 */
-TAB_SWITCHER_DEFAULT_MAX_SIZE_STACK = 50;
-TAB_SWITCHER_DEFAULT_MAX_VISIBILE_ITEMS = 5;
-TAB_SWITCHER_DEFAULT_CASE_TYPE = "ic";
+const TAB_SWITCHER_DEFAULT_MAX_SIZE_STACK = 50;
+const TAB_SWITCHER_DEFAULT_MAX_VISIBILE_ITEMS = 5;
+const TAB_SWITCHER_DEFAULT_CASE_TYPE = "ic";
+const TAB_SWITCHER_DEFAULT_SHOW_LAST_USED_PATTERN = true;
 
 function TabSwitcherPrefs() {
     DafizillaPrefs.call(this, "extensions.tabswitcher.");
@@ -72,6 +73,16 @@ function() {
 TabSwitcherPrefs.prototype.__defineSetter__("caseType",
 function(value) {
     this.setString("caseType", value);
+});
+
+TabSwitcherPrefs.prototype.__defineGetter__("showLastUsedPattern",
+function() {
+    return this.getBool("showLastUsedPattern", TAB_SWITCHER_DEFAULT_SHOW_LAST_USED_PATTERN);
+});
+
+TabSwitcherPrefs.prototype.__defineSetter__("showLastUsedPattern",
+function(value) {
+    this.setBool("showLastUsedPattern", value);
 });
 
 TabSwitcherPrefs.prototype.setSafeInt = function(prefName, prefValue, defPrefValue) {

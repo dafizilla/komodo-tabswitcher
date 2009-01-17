@@ -1,6 +1,9 @@
 <!ENTITY tabswitcher.label "TabSwitcher">
 <!ENTITY edit.position.label "Edit Last Position">
+<!ENTITY switch.view.label "Switch View">
 
 <!ENTITY number.edit.position.store "Number of edit positions to store">
 <!ENTITY number.visible.menu.items "Number of visible menu items">
+
+<!ENTITY show.last.used.pattern.label "Show last used pattern">
 

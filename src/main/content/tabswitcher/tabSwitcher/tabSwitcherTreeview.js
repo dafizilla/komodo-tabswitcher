@@ -223,7 +223,7 @@ TabTreeView.prototype = {
     getCellText : function(row, column){
         switch (column.id || column) {
             case "view-treecol":
-                return this.items[row].title;
+                return this.items[row]._ts_title;
         }
 
         return "";
@@ -244,7 +244,8 @@ TabTreeView.prototype = {
     },
 
     getCellProperties: function(row, column, props) {
-        if (this.items[row].isCurrent) {
+        if (this.items[row].isCurrent
+            && this.currentWindow == this.items[row]._ts_window) {
             props.AppendElement(selectedItemAtom);
         }
     },
