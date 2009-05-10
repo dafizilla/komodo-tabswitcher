@@ -11,6 +11,13 @@
 <!ENTITY edit.position.remove.all.label "Remove All">
 <!ENTITY edit.position.remove.all.desc "TabSwitcher: Edit Position - Remove All">
 
+<!ENTITY sort.by.name.desc "TabSwitcher: Sort Tabs - By Name">
+<!ENTITY menuitem-sort.tabs.label "Sort Tabs">
+<!ENTITY menuitem-sort.tabs.by.name.label "By Name">
+
+<!ENTITY sort.by.ext.desc "TabSwitcher: Sort Tabs - By Extension">
+<!ENTITY menuitem-sort.tabs.by.ext.label "By Extension">
+
 <!ENTITY match.case.label "Match Case">
 <!ENTITY match.case.accesskey "c">
 <!ENTITY smart.case.label "Smart Case">

@@ -44,6 +44,18 @@
         key="key_cmd_tabswitcher_edit_position_remove_all"
         desc="&edit.position.remove.all.desc;"
         oncommand="gEditPosition.removeAll();"/>
+
+      <broadcaster
+        id="cmd_tabswitcher_sort_by_name"
+        key="key_cmd_tabswitcher_sort_by_name"
+        desc="&sort.by.name.desc;"
+        oncommand="gTabSwitcher.sortTabsByName();"/>
+
+      <broadcaster
+        id="cmd_tabswitcher_sort_by_ext"
+        key="key_cmd_tabswitcher_sort_by_ext"
+        desc="&sort.by.ext.desc;"
+        oncommand="gTabSwitcher.sortTabsByExt();"/>
     </broadcasterset>
 
     <toolboxrow id="main-toolboxrow">
@@ -96,6 +108,41 @@
                     command="cmd_tabswitcher_show"
                     key="key_cmd_tabswitcher_show"
                     insertbefore="window-menu-separator"/>
+
+        <menu label="&menuitem-sort.tabs.label;" id="tabswitcher-window-sorters"
+          insertbefore="window-menu-separator">
+            <menupopup id="tabswitcher-menupopup-window-sorters">
+              <menuitem id="tabswitcher-window-sort-by-name"
+                          class="menuitem-iconic-wide"
+                          label="&menuitem-sort.tabs.by.name.label;"
+                          command="cmd_tabswitcher_sort_by_name"
+                          key="key_cmd_tabswitcher_sort_by_name"/>
+              <menuitem id="tabswitcher-window-sort-by-ext"
+                          class="menuitem-iconic-wide"
+                          label="&menuitem-sort.tabs.by.ext.label;"
+                          command="cmd_tabswitcher_sort_by_ext"
+                          key="key_cmd_tabswitcher_sort_by_ext"/>
+            </menupopup>
+        </menu>
     </menupopup>
+    
+    <menupopup id="tabContextMenu">
+        <menuseparator />
+        <menu label="&menuitem-sort.tabs.label;" id="tabswitcher-context-sorters">
+            <menupopup id="tabswitcher-menupopup-context-sorters">
+              <menuitem id="tabswitcher-context-sort-by-name"
+                          class="menuitem-iconic-wide"
+                          label="&menuitem-sort.tabs.by.name.label;"
+                          command="cmd_tabswitcher_sort_by_name"
+                          key="key_cmd_tabswitcher_sort_by_name"/>
+              <menuitem id="tabswitcher-context-sort-by-ext"
+                          class="menuitem-iconic-wide"
+                          label="&menuitem-sort.tabs.by.ext.label;"
+                          command="cmd_tabswitcher_sort_by_ext"
+                          key="key_cmd_tabswitcher_sort_by_ext"/>
+            </menupopup>
+        </menu>
+    </menupopup>
+
 </overlay>
    

@@ -42,5 +42,30 @@ var gTabSwitcher = {
                           "_blank",
                           "chrome,modal,resizable=yes,dependent=yes",
                           this);
+    },
+    
+    sortTabsByName : function() {
+        DafizillaCommon.sortTabs(ko.views.manager.currentView,
+                function(nodeA, nodeB) {
+                    var labelA = nodeA.label.toLowerCase();
+                    var labelB = nodeB.label.toLowerCase();
+                    return labelA == labelB ? 0 : labelA < labelB ? -1 : 1;
+                });
+        ko.views.manager.currentView.setFocus();
+    },
+    
+    sortTabsByExt : function() {
+        DafizillaCommon.sortTabs(ko.views.manager.currentView,
+                function(nodeA, nodeB) {
+                    var labelA = nodeA.label.toLowerCase();
+                    var labelB = nodeB.label.toLowerCase();
+                    var extA = labelA.replace(/.*\./, '');
+                    var extB = labelB.replace(/.*\./, '');
+                    if (extA == extB) {
+                        return labelA == labelB ? 0 : labelA < labelB ? -1 : 1;
+                    }
+                    return extA < extB ? -1 : 1;
+                });
+        ko.views.manager.currentView.setFocus();
     }
 }

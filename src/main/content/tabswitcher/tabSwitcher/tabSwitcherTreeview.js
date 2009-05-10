@@ -46,7 +46,7 @@ function TabTreeView(treeElement, items) {
 
     this.treebox = null;
     function sortByTitle(a, b) {
-        return a.title.localeCompare(b.title);
+        return a._ts_title.localeCompare(b._ts_title);
     }
 
     this.items.sort(sortByTitle);
@@ -192,7 +192,7 @@ TabTreeView.prototype = {
 
         var re = new PatternMatcher.strategies.globCaseContains(str, matchCase);
         for (var i = 0; i < this.allItems.length; i++) {
-            var title = this.allItems[i].title;
+            var title = this.allItems[i]._ts_title;
             
             if (re.matches(title)) {
                 selectedItems.push(this.allItems[i]);

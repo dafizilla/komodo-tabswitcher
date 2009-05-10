@@ -57,3 +57,22 @@ DafizillaCommon.removeMenuItems = function(menu) {
     }
 }
 
+DafizillaCommon.sortTabs = function(view, sorter) {
+    if (typeof(view) == "undefined" || view == null) {
+        return;
+    }
+    var tabbox = view.parentNode;
+    
+    while (tabbox && tabbox.nodeName != "tabbox" && tabbox.nodeName != "xul:tabbox") {
+        tabbox = tabbox.parentNode;
+    }
+    var childNodes = tabbox._tabs.childNodes;
+    
+    for (var i = 0; i < childNodes.length; i++) {
+        for (var j = childNodes.length - 1; j > i; j--) {
+            if (sorter(childNodes[j], childNodes[j - 1]) < 0) {
+                tabbox._tabs.insertBefore(childNodes[j], childNodes[j - 1])
+            }
+        }
+    }
+}
