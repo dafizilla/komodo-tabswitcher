@@ -31,6 +31,14 @@
                                       label="&switch.view.label;"/>
                         </treerow>
                     </treeitem>
+
+                    <treeitem container="false" id="ordertabs">
+                        <treerow>
+                            <treecell class="treecell-indent"
+                              url="chrome://tabswitcher/content/pref/pref-ordertabs.xul"
+                                      label="&tabs.order.label;"/>
+                        </treerow>
+                    </treeitem>
                 </treechildren>
 
             </treeitem>

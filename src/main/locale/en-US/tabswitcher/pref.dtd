@@ -7,3 +7,7 @@
 
 <!ENTITY show.last.used.pattern.label "Show last used pattern">
 
+<!ENTITY tabs.order.label "Tabs Order">
+<!ENTITY tabs.order.auto.label "Order Tabs at every new opened view">
+<!ENTITY tabs.order.sort.by.name "Sort by file name">
+<!ENTITY tabs.order.group.by.ext "Group by file extension">

@@ -37,6 +37,8 @@
 
 var gTabSwitcher = {
     searchPattern : "",
+    prefs : new TabSwitcherPrefs(),
+
     onShowTabSwitcher : function(event) {
         window.openDialog("chrome://tabswitcher/content/tabSwitcher/tabSwitcher.xul",
                           "_blank",
@@ -44,6 +46,69 @@ var gTabSwitcher = {
                           this);
     },
     
+    onLoad : function() {
+        var obs = DafizillaCommon.getObserverService();
+        obs.addObserver(this, "tabswitcher_pref_changed", false);
+
+        this.addListeners();
+    },
+
+    onUnLoad : function() {
+        var obs = DafizillaCommon.getObserverService();
+        obs.removeObserver(this, "tabswitcher_pref_changed");
+        this.removeListeners();
+    },
+
+    observe : function(subject, topic, data) {
+        try {
+        switch (topic) {
+            case "tabswitcher_pref_changed":
+                this.prefsChanged(subject, data);
+                break;
+        }
+        } catch (err) {
+            alert(topic + "--" + data + "\n" + err);
+        }
+    },
+
+    prefsChanged : function(subject, data) {
+        this.prefs = new TabSwitcherPrefs();
+        this.sortTabs();
+    },
+    
+    addListeners : function() {
+        var self = this;
+
+        this.handle_current_view_opened_setup = function(event) {
+            self.onCurrentViewOpened(event);
+        };
+
+        window.addEventListener('view_opened',
+                                this.handle_current_view_opened_setup, false);
+    },
+
+    removeListeners : function() {
+        window.removeEventListener('view_opened',
+                                this.handle_current_view_opened_setup, false);
+    },
+
+    onCurrentViewOpened : function(event) {
+        this.sortTabs();
+    },
+
+    sortTabs : function() {
+        if (this.prefs.orderTabsAuto) {
+            switch(this.prefs.orderTabsType) {
+                case "n":
+                    this.sortTabsByName();
+                    break;
+                case "e":
+                    this.sortTabsByExt();
+                    break;
+            }
+        }
+    },
+
     sortTabsByName : function() {
         DafizillaCommon.sortTabs(ko.views.manager.currentView,
                 function(nodeA, nodeB) {
@@ -69,3 +134,6 @@ var gTabSwitcher = {
         ko.views.manager.currentView.setFocus();
     }
 }
+
+window.addEventListener("load", function(event) { gTabSwitcher.onLoad(event); }, false);
+window.addEventListener("unload", function(event) { gTabSwitcher.onUnLoad(event); }, false);

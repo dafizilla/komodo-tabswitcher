@@ -85,6 +85,27 @@ function(value) {
     this.setBool("showLastUsedPattern", value);
 });
 
+TabSwitcherPrefs.prototype.__defineGetter__("orderTabsAuto",
+function() {
+    return this.getBool("orderTabsAuto", false);
+});
+
+TabSwitcherPrefs.prototype.__defineSetter__("orderTabsAuto",
+function(value) {
+    this.setBool("orderTabsAuto", value);
+});
+
+
+TabSwitcherPrefs.prototype.__defineGetter__("orderTabsType",
+function() {
+    return this.getString("orderTabsType", "n");
+});
+
+TabSwitcherPrefs.prototype.__defineSetter__("orderTabsType",
+function(value) {
+    this.setString("orderTabsType", value);
+});
+
 TabSwitcherPrefs.prototype.setSafeInt = function(prefName, prefValue, defPrefValue) {
     var v = DafizillaPrefs.safeInt(prefValue, defPrefValue,
                                    function(value) {
