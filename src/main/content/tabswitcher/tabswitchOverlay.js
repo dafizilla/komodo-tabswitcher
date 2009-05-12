@@ -110,28 +110,36 @@ var gTabSwitcher = {
     },
 
     sortTabsByName : function() {
-        DafizillaCommon.sortTabs(ko.views.manager.currentView,
-                function(nodeA, nodeB) {
-                    var labelA = nodeA.label.toLowerCase();
-                    var labelB = nodeB.label.toLowerCase();
-                    return labelA == labelB ? 0 : labelA < labelB ? -1 : 1;
-                });
-        ko.views.manager.currentView.setFocus();
+        var view = ko.views.manager.currentView;
+        
+        if (view) {
+            DafizillaCommon.sortTabs(view,
+                    function(nodeA, nodeB) {
+                        var labelA = nodeA.label.toLowerCase();
+                        var labelB = nodeB.label.toLowerCase();
+                        return labelA == labelB ? 0 : labelA < labelB ? -1 : 1;
+                    });
+            view.setFocus();
+        }
     },
     
     sortTabsByExt : function() {
-        DafizillaCommon.sortTabs(ko.views.manager.currentView,
-                function(nodeA, nodeB) {
-                    var labelA = nodeA.label.toLowerCase();
-                    var labelB = nodeB.label.toLowerCase();
-                    var extA = labelA.replace(/.*\./, '');
-                    var extB = labelB.replace(/.*\./, '');
-                    if (extA == extB) {
-                        return labelA == labelB ? 0 : labelA < labelB ? -1 : 1;
-                    }
-                    return extA < extB ? -1 : 1;
-                });
-        ko.views.manager.currentView.setFocus();
+        var view = ko.views.manager.currentView;
+        
+        if (view) {
+            DafizillaCommon.sortTabs(view,
+                    function(nodeA, nodeB) {
+                        var labelA = nodeA.label.toLowerCase();
+                        var labelB = nodeB.label.toLowerCase();
+                        var extA = labelA.replace(/.*\./, '');
+                        var extB = labelB.replace(/.*\./, '');
+                        if (extA == extB) {
+                            return labelA == labelB ? 0 : labelA < labelB ? -1 : 1;
+                        }
+                        return extA < extB ? -1 : 1;
+                    });
+            view.setFocus();
+        }
     }
 }
 
