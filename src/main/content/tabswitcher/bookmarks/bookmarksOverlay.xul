@@ -25,6 +25,14 @@
             class="menuitem-iconic-wide"
             oncommand="ko.uilayout.ensureTabShown('viewswitcher_bookmarks_tab', true)"
             label="&viewswitcher.bookmark.tab.title;"
+            type="checkbox"
+            />
+    </menupopup>
+
+    <menupopup id="tabPicker_popup">
+        <menuitem id="show_viewswitcher_bookmarks_tab"
+            oncommand="ko.uilayout.ensureTabShown('viewswitcher_bookmarks_tab', true)"
+            label="&viewswitcher.bookmark.tab.title;"
             />
     </menupopup>
 
