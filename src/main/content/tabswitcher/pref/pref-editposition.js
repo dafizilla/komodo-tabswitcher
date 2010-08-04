@@ -37,10 +37,16 @@
 var prefs = new TabSwitcherPrefs();
 var maxSizeEditPositionStackWidget;
 var maxVisibleMenuItemsWidget;
+var editGranularityWidget;
+var editClearNextStackWidget;
+var editRememberCurrentPosWidget;
 
 function OnPreferencePageOK(prefset) {
     prefs.maxSizeEditPositionStack = maxSizeEditPositionStackWidget.value;
     prefs.maxVisibleMenuItems = maxVisibleMenuItemsWidget.value;
+    prefs.editGranularity = editGranularityWidget.value;
+    prefs.editClearNextStack = editClearNextStackWidget.checked;
+    prefs.editRememberCurrentPos = editRememberCurrentPosWidget.checked;
 
     prefs.save();
     var obs = DafizillaCommon.getObserverService();
@@ -51,12 +57,18 @@ function OnPreferencePageOK(prefset) {
 function OnPreferencePageInitalize(prefset) {
     maxSizeEditPositionStackWidget = document.getElementById("maxSizeEditPositionStack");
     maxVisibleMenuItemsWidget = document.getElementById("maxVisibleMenuItems");
+    editGranularityWidget = document.getElementById("editGranularity");
+    editClearNextStackWidget = document.getElementById("editClearNextStack");
+    editRememberCurrentPosWidget = document.getElementById("editRememberCurrentPos");
 }
 
 function OnPreferencePageLoading(prefset) {
     prefs.load();
     maxSizeEditPositionStackWidget.value = prefs.maxSizeEditPositionStack;
     maxVisibleMenuItemsWidget.value = prefs.maxVisibleMenuItems;
+    editGranularityWidget.value = prefs.editGranularity;
+    editClearNextStackWidget.checked = prefs.editClearNextStack;
+    editRememberCurrentPosWidget.checked = prefs.editRememberCurrentPos;
 }
 
 function editPositionOnLoad() {

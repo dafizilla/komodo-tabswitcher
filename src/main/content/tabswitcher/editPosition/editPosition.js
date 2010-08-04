@@ -35,6 +35,9 @@
 # ***** END LICENSE BLOCK *****
 */
 
+//TODO: clear nextEditStack on adding
+//      push current pos on goToLastEdit if nextEditStack is empty
+
 var gEditPosition = {
     lastEditStack : new FixedSizeStack(10),
     nextEditStack : new FixedSizeStack(10),
@@ -45,7 +48,7 @@ var gEditPosition = {
             obs.addObserver(this, "current_view_check_status", false);
             obs.addObserver(this, "view_closed", false);
             obs.addObserver(this, "tabswitcher_pref_changed", false);
-            
+
             this.prefs = new TabSwitcherPrefs();
             this.init();
             this.addListeners();
@@ -97,15 +100,15 @@ var gEditPosition = {
 
     pushEdit : function() {
         var currView = ko.views.manager.currentView;
-    
+
         if (!currView.document) {
             return;
         }
-            
+
         if (!currView.document.isDirty) {
             return;
         }
-    
+
         var scimoz = currView.scintilla.scimoz;
         var last = null;
 
@@ -114,28 +117,88 @@ var gEditPosition = {
         }
 
         if (last && last.view == currView) {
-            last.position = scimoz.currentPos;
+            // seems to happen that pushEdit is called multiple times
+            // with the same position
+            if (last.position != currentPos) {
+                var currentPos = scimoz.currentPos;
+                var currentLine = scimoz.lineFromPosition(currentPos);
+                var mode = this.prefs.editGranularity;
+                try {
+                    switch (mode) {
+                        case "a":
+                            this.addPositionToStack(this.lastEditStack);
+                            break;
+                        case "s":
+                            last.position = currentPos;
+                            last.line = currentLine;
+                            last.col = scimoz.getColumn(currentPos);
+                            break;
+                        default:
+                            var cnt = parseInt(mode) - 1;
+                            var diff = last.line - currentLine;
+                            var absdiff = diff < 0 ? -diff : diff;
+                            if (absdiff <= cnt) {
+                                //var msg = "modifypos: "+cnt+" "+absdiff+" "+last.position+" "+currentPos;
+                                //StatusBar_AddMessage(msg, "debugger",5000,true);
+
+                                last.position = currentPos;
+                                last.line = currentLine;
+                                last.col = scimoz.getColumn(currentPos);
+
+                                if (this.prefs.editClearNextStack) {
+                                    this.nextEditStack.clear();
+                                    this.updateCommands();
+                                }
+                            } else {
+                                //var msg = "addpos: "+cnt+" "+absdiff+" "+currentPos;
+                                //StatusBar_AddMessage(msg, "debugger",5000,true);
+
+                                this.addPositionToStack(this.lastEditStack);
+                            }
+                    }
+                }  catch (err) {
+                    alert(mode + "--" + currentPos + "\n" + err);
+                }
+            }
         } else {
             if (!this.isEditOnCurrentView(this.lastEditStack.peek())) {
-                this.lastEditStack.push({ view : currView, position : scimoz.currentPos});
-                this.updateCommands();
+                this.addPositionToStack(this.lastEditStack);
             }
         }
     },
-    
+
+    addPositionToStack : function(toStack) {
+        var currView = ko.views.manager.currentView;
+        var scimoz = currView.scintilla.scimoz;
+        var currentPos = scimoz.currentPos;
+
+        toStack.push({ view : currView,
+                    position : currentPos,
+                    line: scimoz.lineFromPosition(currentPos),
+                    col: scimoz.getColumn(currentPos)});
+
+        if (this.prefs.editClearNextStack) {
+            this.nextEditStack.clear();
+        }
+
+        this.updateCommands();
+    },
+
     goToLastEdit : function(index) {
-        this._popEditPosition(this.lastEditStack, index, this.nextEditStack);
+        this._popEditPosition(this.lastEditStack, index, this.nextEditStack,
+                              this.prefs.editRememberCurrentPos);
     },
 
     goToNextEdit : function(index) {
-        this._popEditPosition(this.nextEditStack, index, this.lastEditStack);
+        this._popEditPosition(this.nextEditStack, index, this.lastEditStack,
+                              false);
     },
-    
+
     updateCommands : function() {
         this.enable("cmd_tabswitcher_goto_last_edit_position", this.lastEditStack.length > 0);
         this.enable("cmd_tabswitcher_goto_next_edit_position", this.nextEditStack.length > 0);
     },
-    
+
     enable : function(elementId, isEnabled) {
         var el = document.getElementById(elementId);
 
@@ -147,8 +210,8 @@ var gEditPosition = {
             }
         }
     },
-    
-    _popEditPosition : function(fromStack, fromIndex, toStack) {
+
+    _popEditPosition : function(fromStack, fromIndex, toStack, saveCurrent) {
         try {
 
 
@@ -165,11 +228,15 @@ var gEditPosition = {
         fromIndex = fromStack.items.length - 1 - fromIndex;
 
         var editPos = fromStack.items[fromIndex];
-    
+
         if (!editPos) {
             return false;
         }
-        
+
+        if (saveCurrent && toStack.length == 0){
+            this.addPositionToStack(toStack);
+        }
+
         var elementToMoveCount = fromStack.items.length;
         for (var i = elementToMoveCount - 1; i >= fromIndex ; i--) {
             toStack.push(fromStack.items[i]);
@@ -184,7 +251,7 @@ var gEditPosition = {
         } catch(e) {
             DafizillaCommon.log("_popEditPosition err " + e);
         }
-        
+
         return true;
     },
 
@@ -193,13 +260,13 @@ var gEditPosition = {
         this.nextEditStack.clear();
         this.updateCommands();
     },
-    
+
     initLastEditPopupMenu : function(menu) {
         this.initPopupMenu(menu,
                            this.lastEditStack,
                            "gEditPosition.goToLastEdit(%1)");
     },
-    
+
     initNextEditPopupMenu : function(menu) {
         this.initPopupMenu(menu,
                            this.nextEditStack,
@@ -220,15 +287,18 @@ var gEditPosition = {
         }
         var itemsToAdd = this.prefs.maxVisibleMenuItems;
         for (; index <= count && itemsToAdd > 0; index++, --itemsToAdd) {
-            var view = items[count - index].view;
+            var item = items[count - index];
+            var view = item.view;
             var mi = document.createElement("menuitem");
-            mi.setAttribute("label", view.title);
+            // show line and column, but scimoz is 0 based
+            var text = view.title+" l:"+(item.line+1)+" c:"+(item.col+1);
+            mi.setAttribute("label", text);
             mi.setAttribute("crop", "center");
             mi.setAttribute("tooltiptext", view.document.displayPath);
             mi.setAttribute("oncommand", command.replace("%1", index));
             menu.appendChild(mi);
         }
-        
+
         if (menu.hasChildNodes()) {
             document.getElementById(menuPrefix + "-menuseparator")
                 .removeAttribute("collapsed");
@@ -241,10 +311,10 @@ var gEditPosition = {
     isEditOnCurrentView : function(editPos) {
         if (editPos) {
             var currView = ko.views.manager.currentView;
-    
+
             if (currView.document) {
                 var currPos = currView.scintilla.scimoz.currentPos;
-                
+
                 if (currView == editPos.view && currPos == editPos.position) {
                     return true;
                 }

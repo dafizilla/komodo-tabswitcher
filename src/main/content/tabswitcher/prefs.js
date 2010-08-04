@@ -39,6 +39,8 @@ const TAB_SWITCHER_DEFAULT_MAX_VISIBILE_ITEMS = 5;
 const TAB_SWITCHER_DEFAULT_CASE_TYPE = "ic";
 const TAB_SWITCHER_DEFAULT_SHOW_LAST_USED_PATTERN = true;
 
+const TAB_SWITCHER_DEFAULT_EDIT_TYPE = "1";
+
 function TabSwitcherPrefs() {
     DafizillaPrefs.call(this, "extensions.tabswitcher.");
 }
@@ -64,6 +66,37 @@ TabSwitcherPrefs.prototype.__defineSetter__("maxVisibleMenuItems",
 function(value) {
     this.setSafeInt("maxVisibleMenuItems", value, TAB_SWITCHER_DEFAULT_MAX_VISIBILE_ITEMS);
 });
+
+TabSwitcherPrefs.prototype.__defineGetter__("editGranularity",
+function() {
+    return this.getString("caseType", TAB_SWITCHER_DEFAULT_EDIT_TYPE);
+});
+
+TabSwitcherPrefs.prototype.__defineSetter__("editGranularity",
+function(value) {
+    this.setString("caseType", value);
+});
+
+TabSwitcherPrefs.prototype.__defineGetter__("editClearNextStack",
+function() {
+    return this.getBool("editClearNextStack", false);
+});
+
+TabSwitcherPrefs.prototype.__defineSetter__("editClearNextStack",
+function(value) {
+    this.setBool("editClearNextStack", value);
+});
+
+TabSwitcherPrefs.prototype.__defineGetter__("editRememberCurrentPos",
+function() {
+    return this.getBool("editRememberCurrentPos", false);
+});
+
+TabSwitcherPrefs.prototype.__defineSetter__("editRememberCurrentPos",
+function(value) {
+    this.setBool("editRememberCurrentPos", value);
+});
+
 
 TabSwitcherPrefs.prototype.__defineGetter__("caseType",
 function() {

@@ -2,7 +2,7 @@
 <?xml-stylesheet href="chrome://global/skin" type="text/css"?>
 
 <!DOCTYPE window SYSTEM "chrome://tabswitcher/locale/pref.dtd" >
- 
+
 <window xmlns:html="http://www.w3.org/1999/xhtml"
     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
     orient="vertical"
@@ -20,8 +20,9 @@
   <groupbox orient="vertical">
     <caption label="&edit.position.label;"/>
 
-    <grid>
+    <grid flex="1">
         <columns>
+            <column flex="1"/>
             <column/>
             <column/>
         </columns>
@@ -35,10 +36,34 @@
               <label value="&number.visible.menu.items;" />
               <textbox id="maxVisibleMenuItems" size="4"/>
             </row>
+            <row align="center">
+              <label value="&edit.position.granularity.label;" />
+              <menulist id="editGranularity">
+                <menupopup>
+                  <menuitem label="&edit.granularity.all;" value="a"/>
+                  <menuitem label="&edit.granularity.1;" value="1"/>
+                  <menuitem label="&edit.granularity.2;" value="2"/>
+                  <menuitem label="&edit.granularity.3;" value="3"/>
+                  <menuitem label="&edit.granularity.5;" value="5"/>
+                  <menuitem label="&edit.granularity.7;" value="7"/>
+                  <menuitem label="&edit.granularity.10;" value="10"/>
+                  <menuitem label="&edit.granularity.single;" value="s"/>
+                </menupopup>
+              </menulist>
+            </row>
+            <row align="center">
+              <checkbox id="editClearNextStack"
+                label="&edit.editClearNextStack.label;"
+                checked="false"/>
+            </row>
+            <row align="center">
+              <checkbox id="editRememberCurrentPos"
+                label="&edit.editRememberCurrentPos.label;"
+                checked="false"/>
+            </row>
+
         </rows>
     </grid>
 
   </groupbox>
 </window>
- 
-
