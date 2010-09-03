@@ -1,5 +1,5 @@
 <!DOCTYPE extension [
-<!ENTITY extension.version "0.6">
+<!ENTITY extension.version "0.7">
 ]>
 
 <extension name="tabswitcher">
@@ -13,7 +13,7 @@
     <optionurl-path/>
     <author>Davide Ficano</author>
     <ohloh-project-name>tabswitcher</ohloh-project-name>
-    
+
     <!-- Point to directory containing content, locales and skins. -->
     <!-- If present must start with / (slash) -->
     <chrome-extension-directory>/tabswitcher</chrome-extension-directory>
@@ -25,7 +25,7 @@
     <skins>
         <skin>classic</skin>
     </skins>
-    
+
     <!-- used by install.js and build process to set the prefs.js.xsl destination file name -->
     <prefs>
         <pref>tabswitcher.js</pref>
@@ -52,7 +52,7 @@
             <minVersion>5.0</minVersion>
             <maxVersion>6.*</maxVersion>
         </application>
-        
+
         <application>
             <description>Komodo Edit</description>
             <id>{b1042fb5-9e9c-11db-b107-000d935d3368}</id>
