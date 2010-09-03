@@ -49,6 +49,10 @@ DafizillaCommon.log = function(msg) {
     ko.logging.getLogger("extensions.tabswitcher").warn(msg);
 }
 
+DafizillaCommon.exception = function(error) {
+    ko.logging.getLogger("extensions.tabswitcher").exception(error);
+}
+
 DafizillaCommon.removeMenuItems = function(menu) {
     var children = menu.childNodes;
 
@@ -62,12 +66,12 @@ DafizillaCommon.sortTabs = function(view, sorter) {
         return;
     }
     var tabbox = view.parentNode;
-    
+
     while (tabbox && tabbox.nodeName != "tabbox" && tabbox.nodeName != "xul:tabbox") {
         tabbox = tabbox.parentNode;
     }
     var childNodes = tabbox._tabs.childNodes;
-    
+
     for (var i = 0; i < childNodes.length; i++) {
         for (var j = childNodes.length - 1; j > i; j--) {
             if (sorter(childNodes[j], childNodes[j - 1]) < 0) {

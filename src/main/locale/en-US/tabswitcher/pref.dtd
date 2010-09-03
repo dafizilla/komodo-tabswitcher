@@ -1,16 +1,22 @@
 <!ENTITY tabswitcher.label "TabSwitcher">
 <!ENTITY edit.position.label "Edit Last Position">
 <!ENTITY edit.position.granularity.label "Granularity">
-<!ENTITY edit.granularity.all "All edits">
-<!ENTITY edit.granularity.single "Single file">
+<!ENTITY edit.granularity.single "Single position in a file">
 <!ENTITY edit.granularity.1 "1 line">
 <!ENTITY edit.granularity.2 "2 lines">
 <!ENTITY edit.granularity.3 "3 lines">
 <!ENTITY edit.granularity.5 "5 lines">
 <!ENTITY edit.granularity.7 "7 lines">
 <!ENTITY edit.granularity.10 "10 lines">
+<!ENTITY edit.granularity.15 "15 lines">
 <!ENTITY edit.editClearNextStack.label "Clear next stack on modification">
 <!ENTITY edit.editRememberCurrentPos.label "Remember current position when going back (and next stack is empty)">
+<!ENTITY edit.editShowMarkers.label "Show position markers*">
+<!ENTITY edit.editShowMarkers.tooltip "You need to reopen documents (or restart Komodo)">
+<!ENTITY edit.editCompatibility.label "Install compatibility handler*">
+<!ENTITY edit.editCompatibility.tooltip "Komodo restart required">
+<!ENTITY edit.editCompatibility.text1 "Turn this on if you have Komodo IDE and you can not">
+<!ENTITY edit.editCompatibility.text2 "or do not want to turn off the domviewer@ActiveState.com extension">
 <!ENTITY switch.view.label "Switch View">
 
 <!ENTITY number.edit.position.store "Number of edit positions to store">

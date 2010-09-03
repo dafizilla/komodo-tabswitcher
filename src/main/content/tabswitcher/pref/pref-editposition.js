@@ -40,13 +40,17 @@ var maxVisibleMenuItemsWidget;
 var editGranularityWidget;
 var editClearNextStackWidget;
 var editRememberCurrentPosWidget;
-
+var editShowMarkersWidget;
+var editCompatibilityWidget;
+ 
 function OnPreferencePageOK(prefset) {
     prefs.maxSizeEditPositionStack = maxSizeEditPositionStackWidget.value;
     prefs.maxVisibleMenuItems = maxVisibleMenuItemsWidget.value;
     prefs.editGranularity = editGranularityWidget.value;
     prefs.editClearNextStack = editClearNextStackWidget.checked;
     prefs.editRememberCurrentPos = editRememberCurrentPosWidget.checked;
+    prefs.editShowMarkers = editShowMarkersWidget.checked;
+    prefs.editCompatibility = editCompatibilityWidget.checked;
 
     prefs.save();
     var obs = DafizillaCommon.getObserverService();
@@ -60,6 +64,8 @@ function OnPreferencePageInitalize(prefset) {
     editGranularityWidget = document.getElementById("editGranularity");
     editClearNextStackWidget = document.getElementById("editClearNextStack");
     editRememberCurrentPosWidget = document.getElementById("editRememberCurrentPos");
+    editShowMarkersWidget = document.getElementById("editShowMarkers");
+    editCompatibilityWidget = document.getElementById("editCompatibility");
 }
 
 function OnPreferencePageLoading(prefset) {
@@ -69,6 +75,8 @@ function OnPreferencePageLoading(prefset) {
     editGranularityWidget.value = prefs.editGranularity;
     editClearNextStackWidget.checked = prefs.editClearNextStack;
     editRememberCurrentPosWidget.checked = prefs.editRememberCurrentPos;
+    editShowMarkersWidget.checked = prefs.editShowMarkers;
+    editCompatibilityWidget.checked = prefs.editCompatibility;
 }
 
 function editPositionOnLoad() {

@@ -34,7 +34,7 @@
 #
 # ***** END LICENSE BLOCK *****
 */
-const TAB_SWITCHER_DEFAULT_MAX_SIZE_STACK = 50;
+const TAB_SWITCHER_DEFAULT_MAX_SIZE_STACK = 10;
 const TAB_SWITCHER_DEFAULT_MAX_VISIBILE_ITEMS = 5;
 const TAB_SWITCHER_DEFAULT_CASE_TYPE = "ic";
 const TAB_SWITCHER_DEFAULT_SHOW_LAST_USED_PATTERN = true;
@@ -95,6 +95,26 @@ function() {
 TabSwitcherPrefs.prototype.__defineSetter__("editRememberCurrentPos",
 function(value) {
     this.setBool("editRememberCurrentPos", value);
+});
+
+TabSwitcherPrefs.prototype.__defineGetter__("editShowMarkers",
+function() {
+    return this.getBool("editShowMarkers", false);
+});
+
+TabSwitcherPrefs.prototype.__defineSetter__("editShowMarkers",
+function(value) {
+    this.setBool("editShowMarkers", value);
+});
+
+TabSwitcherPrefs.prototype.__defineGetter__("editCompatibility",
+function() {
+    return this.getBool("editCompatibility", false);
+});
+
+TabSwitcherPrefs.prototype.__defineSetter__("editCompatibility",
+function(value) {
+    this.setBool("editCompatibility", value);
 });
 
 
