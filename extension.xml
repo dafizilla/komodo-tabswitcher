@@ -1,5 +1,5 @@
 <!DOCTYPE extension [
-<!ENTITY extension.version "0.8a1">
+<!ENTITY extension.version "0.8">
 ]>
 
 <extension name="tabswitcher">
