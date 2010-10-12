@@ -6,3 +6,9 @@
   -moz-appearance: none;
   border: none;
 }
+
+.link {
+  color: #0000FF;
+  text-decoration: underline !important;
+  cursor: pointer;
+}

@@ -11,7 +11,7 @@
             <treeitem container="true" id="uiTabSwitcherMain">
                 <treerow>
                     <treecell class="treecell-indent"
-                              url="chrome://tabswitcher/content/pref/pref-editposition.xul"
+                              url="chrome://tabswitcher/content/pref/pref-main.xul"
                               label="&tabswitcher.label;"/>
                 </treerow>
 
