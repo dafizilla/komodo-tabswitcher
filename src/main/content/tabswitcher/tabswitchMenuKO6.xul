@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE overlay SYSTEM "chrome://tabswitcher/locale/tabswitcher.dtd" >
+
+<overlay id="tabswitchMenuKO5"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+    <menupopup id="naviation_menupopup">
+        <menuitem id="tabswitcher-select-view"
+                    class="menuitem-iconic-wide"
+                    label="&menuitem-tabswitcher-select-view.label;"
+                    command="cmd_tabswitcher_show"
+                    key="key_cmd_tabswitcher_show"
+                    insertbefore="naviation_menupopup_separator_2"/>
+
+        <menu label="&menuitem-sort.tabs.label;" id="tabswitcher-window-sorters"
+          insertbefore="naviation_menupopup_separator_2">
+            <menupopup id="tabswitcher-menupopup-window-sorters">
+              <menuitem id="tabswitcher-window-sort-by-name"
+                          class="menuitem-iconic-wide"
+                          label="&menuitem-sort.tabs.by.name.label;"
+                          command="cmd_tabswitcher_sort_by_name"
+                          key="key_cmd_tabswitcher_sort_by_name"/>
+              <menuitem id="tabswitcher-window-sort-by-ext"
+                          class="menuitem-iconic-wide"
+                          label="&menuitem-sort.tabs.by.ext.label;"
+                          command="cmd_tabswitcher_sort_by_ext"
+                          key="key_cmd_tabswitcher_sort_by_ext"/>
+            </menupopup>
+        </menu>
+    </menupopup>
+
+    <menupopup id="tabContextMenu">
+        <menuseparator />
+        <menu label="&menuitem-sort.tabs.label;" id="tabswitcher-context-sorters">
+            <menupopup id="tabswitcher-menupopup-context-sorters">
+              <menuitem id="tabswitcher-context-sort-by-name"
+                          class="menuitem-iconic-wide"
+                          label="&menuitem-sort.tabs.by.name.label;"
+                          command="cmd_tabswitcher_sort_by_name"
+                          key="key_cmd_tabswitcher_sort_by_name"/>
+              <menuitem id="tabswitcher-context-sort-by-ext"
+                          class="menuitem-iconic-wide"
+                          label="&menuitem-sort.tabs.by.ext.label;"
+                          command="cmd_tabswitcher_sort_by_ext"
+                          key="key_cmd_tabswitcher_sort_by_ext"/>
+            </menupopup>
+        </menu>
+    </menupopup>
+
+</overlay>
