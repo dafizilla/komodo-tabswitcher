@@ -1,0 +1,8 @@
+<!ENTITY viewswitcher.bookmark.tab.title "Liste des marqueurs dans le code">
+<!ENTITY viewswitcher.bookmark.refresh.tooltip "Actualiser la liste des marqueurs dans le code">
+<!ENTITY viewswitcher.bookmark.remove.selected.label "Supprimer les marqueurs sélectionnés">
+<!ENTITY viewswitcher.bookmark.remove.all.label "Supprimer tous les marqueurs dans le code">
+<!ENTITY viewswitcher.bookmark.file.label "Fichier">
+<!ENTITY viewswitcher.bookmark.line.number.label "Ligne">
+<!ENTITY viewswitcher.bookmark.line.content.label "Contenu">
+<!ENTITY viewswitcher.bookmark.found "&#37;1 marqueur(s)  trouvé(s) dans &#37;2 affichages sur &#37;3">

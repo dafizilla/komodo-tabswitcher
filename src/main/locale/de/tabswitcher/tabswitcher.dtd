@@ -1,0 +1,13 @@
+<!ENTITY switchView.desc "TabSwitcher: Ansicht - Ansicht wechseln...">
+<!ENTITY menuitem-tabswitcher-select-view.label "Ansicht wechseln...">
+<!ENTITY switchView.dialog.title "Zur Ansicht wechseln">
+<!ENTITY goto.last.edit.position.desc "TabSwitcher: Editier-Position - Gehe zur letzten">
+<!ENTITY toolbar.goto.last.edit.position.tooltip "Gehe zur letzten Editier-Position">
+<!ENTITY goto.next.edit.position.desc "TabSwitcher: Editier-Position - Gehe zur nächsten">
+<!ENTITY toolbar.goto.next.edit.position.tooltip "Gehe zur nächsten Editier-Position">
+<!ENTITY edit.position.remove.all.label "Alle entfernen">
+<!ENTITY edit.position.remove.all.desc "TabSwitcher: Editier-Position - Alle entfernen">
+<!ENTITY match.case.label "Passender Fall">
+<!ENTITY match.case.accesskey "c">
+<!ENTITY smart.case.label "Intelligenter Fall">
+<!ENTITY smart.case.accesskey "c">

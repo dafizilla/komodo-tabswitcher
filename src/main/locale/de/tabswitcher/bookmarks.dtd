@@ -1,0 +1,8 @@
+<!ENTITY viewswitcher.bookmark.tab.title "Lesezeichenliste">
+<!ENTITY viewswitcher.bookmark.refresh.tooltip "Aktualisiere Lesezeichenliste">
+<!ENTITY viewswitcher.bookmark.remove.selected.label "Entferne ausgewähltes Lesezeichen">
+<!ENTITY viewswitcher.bookmark.remove.all.label "Entferne alle Lesezeichen">
+<!ENTITY viewswitcher.bookmark.file.label "Datei">
+<!ENTITY viewswitcher.bookmark.line.number.label "Linie">
+<!ENTITY viewswitcher.bookmark.line.content.label "Inhalt">
+<!ENTITY viewswitcher.bookmark.found "Es wurde(n) &#37;1 Lesezeichen in &#37;2 von &#37;3 Ansicht(en) gefunden">

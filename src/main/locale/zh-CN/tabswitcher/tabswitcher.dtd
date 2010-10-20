@@ -1,0 +1,13 @@
+<!ENTITY switchView.desc "TabSwitcher：查看 - 切换显示">
+<!ENTITY menuitem-tabswitcher-select-view.label "切换显示...">
+<!ENTITY switchView.dialog.title "切换到显示">
+<!ENTITY goto.last.edit.position.desc "TabSwitcher：编辑位置 - 跳到最后">
+<!ENTITY toolbar.goto.last.edit.position.tooltip "跳到最后编辑位置">
+<!ENTITY goto.next.edit.position.desc "TabSwitcher：编辑位置 - 跳到下一个">
+<!ENTITY toolbar.goto.next.edit.position.tooltip "跳到下一个编辑位置">
+<!ENTITY edit.position.remove.all.label "全部删除">
+<!ENTITY edit.position.remove.all.desc "TabSwitcher：编辑位置 - 全部删除">
+<!ENTITY match.case.label "区分大小写">
+<!ENTITY match.case.accesskey "c">
+<!ENTITY smart.case.label "智能判断">
+<!ENTITY smart.case.accesskey "c">

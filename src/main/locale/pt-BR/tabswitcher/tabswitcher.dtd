@@ -1,0 +1,13 @@
+<!ENTITY switchView.desc "TabSwitcher:Exibição - Trocar Exibição">
+<!ENTITY menuitem-tabswitcher-select-view.label "Trocar Exibição...">
+<!ENTITY switchView.dialog.title "Trocar para exibição">
+<!ENTITY goto.last.edit.position.desc "TabSwitcher: Editar Posição - Ir para a última">
+<!ENTITY toolbar.goto.last.edit.position.tooltip "Ir para a última posição editada">
+<!ENTITY goto.next.edit.position.desc "TabSwitcher: Editar Posição - Ir para a próxima">
+<!ENTITY toolbar.goto.next.edit.position.tooltip "Ir para a próxima posição editada">
+<!ENTITY edit.position.remove.all.label "Remover todos">
+<!ENTITY edit.position.remove.all.desc "TabSwitcher: Editar Posição - Remover todos">
+<!ENTITY match.case.label "Match Case">
+<!ENTITY match.case.accesskey "c">
+<!ENTITY smart.case.label "Smart Case">
+<!ENTITY smart.case.accesskey "c">

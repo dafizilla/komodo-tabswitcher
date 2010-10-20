@@ -1,0 +1,13 @@
+<!ENTITY switchView.desc "TabSwitcher: Ver - Cambiar vista...">
+<!ENTITY menuitem-tabswitcher-select-view.label "Cambiar vista...">
+<!ENTITY switchView.dialog.title "Cambiar a vista">
+<!ENTITY goto.last.edit.position.desc "TabSwitcher: Editar posición - Ir a la última">
+<!ENTITY toolbar.goto.last.edit.position.tooltip "Ir a la última posición editada">
+<!ENTITY goto.next.edit.position.desc "TabSwitcher: Editar posición - Ir a la siguiente">
+<!ENTITY toolbar.goto.next.edit.position.tooltip "Ir a la siguiente posición editada">
+<!ENTITY edit.position.remove.all.label "Borrar todo">
+<!ENTITY edit.position.remove.all.desc "TabSwitcher: Editar posición - Borrar todo">
+<!ENTITY match.case.label "Coincidir mayúsculas">
+<!ENTITY match.case.accesskey "c">
+<!ENTITY smart.case.label "Smart Case">
+<!ENTITY smart.case.accesskey "c">

@@ -1,0 +1,8 @@
+<!ENTITY viewswitcher.bookmark.tab.title "Lista de marcadores">
+<!ENTITY viewswitcher.bookmark.refresh.tooltip "Recargar la lista de marcadores">
+<!ENTITY viewswitcher.bookmark.remove.selected.label "Borrar los marcadores seleccionados">
+<!ENTITY viewswitcher.bookmark.remove.all.label "Borrar todos los marcadores">
+<!ENTITY viewswitcher.bookmark.file.label "Archivo">
+<!ENTITY viewswitcher.bookmark.line.number.label "Línea">
+<!ENTITY viewswitcher.bookmark.line.content.label "Contenido">
+<!ENTITY viewswitcher.bookmark.found "Encontrado &#37;1 marcador(es) en &#37;2 de &#37;3 vista(s)">

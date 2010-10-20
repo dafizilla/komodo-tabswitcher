@@ -1,0 +1,8 @@
+<!ENTITY viewswitcher.bookmark.tab.title "书签列表">
+<!ENTITY viewswitcher.bookmark.refresh.tooltip "刷新书签列表">
+<!ENTITY viewswitcher.bookmark.remove.selected.label "删除选中书签">
+<!ENTITY viewswitcher.bookmark.remove.all.label "删除全部书签">
+<!ENTITY viewswitcher.bookmark.file.label "文件">
+<!ENTITY viewswitcher.bookmark.line.number.label "分割线">
+<!ENTITY viewswitcher.bookmark.line.content.label "内容">
+<!ENTITY viewswitcher.bookmark.found "创建 &#37;1 书签在 &#37;2 的 &#37;3 显示">
