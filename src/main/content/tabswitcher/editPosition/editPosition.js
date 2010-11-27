@@ -90,8 +90,6 @@ EditPosFixedSizeStack.prototype = {
 }
 
 const MARKNUM_EDITPOSLOC = 14;
-const SC_MOD_INSERTTEXT = Components.interfaces.ISciMoz.SC_MOD_INSERTTEXT;
-const SC_MOD_DELETETEXT = Components.interfaces.ISciMoz.SC_MOD_DELETETEXT;
 
 var gEditPosition = {
     lastEditStack : new EditPosFixedSizeStack(10),
@@ -564,11 +562,26 @@ var gEditPosition = {
     viewClosed : function(view) {
         try {
             try {
-                view.onModifiedHandler = view.gEditPositionOrigHandler;
-            } catch (e) {};
+                view.removeModifiedHandler(this.viewModifiedHandler);
+            } catch (e) {
+                };
             this.removeView(view, this.lastEditStack.items);
             this.removeView(view, this.nextEditStack.items);
             this.updateCommands();
+        } catch (err) {
+            DafizillaCommon.exception(err);
+        }
+    },
+
+    viewModifiedHandler : function(position, modificationType,
+                                   text, length, linesAdded, line,
+                                   foldLevelNow, foldLevelPrev) {
+        try {
+            try {
+                gEditPosition.pushEdit(this, position);
+            } catch (err) {
+                DafizillaCommon.exception(err);
+            };
         } catch (err) {
             DafizillaCommon.exception(err);
         }
@@ -595,26 +608,13 @@ var gEditPosition = {
                 }
 
                 if (!this.prefs.editCompatibility) {
-                    view.gEditPositionOrigHandler = view.onModifiedHandler;
+                    var wantedflags = (
+                           Components.interfaces.ISciMoz.SC_MOD_INSERTTEXT |
+                           Components.interfaces.ISciMoz.SC_MOD_DELETETEXT);
 
-                    view.onModifiedHandler = function(position, modificationType,
-                        text, length, linesAdded, line, foldLevelNow, foldLevelPrev) {
+                    view.addModifiedHandler(this.viewModifiedHandler, view,
+                                            100, wantedflags);
 
-                        if (modificationType & (SC_MOD_INSERTTEXT | SC_MOD_DELETETEXT)) {
-                            try {
-                                gEditPosition.pushEdit(this, position);
-                            } catch (err) {
-                                DafizillaCommon.exception(err);
-                            };
-                        }
-
-                        if (typeof(this.gEditPositionOrigHandler) == "function") {
-                            return this.gEditPositionOrigHandler(position, modificationType,
-                                            text, length, linesAdded, line,
-                                            foldLevelNow, foldLevelPrev);
-                        }
-                        return false;
-                    };
                     //DafizillaCommon.log("patch done");
                 };
                 //DafizillaCommon.log("viewOpened");
