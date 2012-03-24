@@ -44,7 +44,7 @@ var gTabSwitcher = {
             this.tabTreeView.currentWindow = ko.windowManager.getMainWindow();
             this.tabTreeView.refresh();
             document.getElementById("view-title").focus();
-            
+
             this.caseCheckbox = document.getElementById("switch-case");
 
             this.prefs = new TabSwitcherPrefs();
@@ -69,7 +69,7 @@ var gTabSwitcher = {
             number : 0,
             hasNumberWindow : windows.length > 1
         };
-        
+
         for (var i in windows) {
             var w = windows[i];
 
@@ -81,14 +81,14 @@ var gTabSwitcher = {
         }
         return views;
     },
-    
+
     addWindowAttribute : function(element, index, array) {
         element._ts_window = this.win;
         element._ts_title = this.hasNumberWindow
             ? "[" + this.number + "] " + element.title
             : element.title;
     },
-    
+
     toogleSearchCase : function (event) {
         switch (this.caseCheckbox.value) {
             case "ic":
@@ -105,10 +105,10 @@ var gTabSwitcher = {
         }
         this.onInput(document.getElementById("view-title"));
     },
-    
+
     setSearchCase : function(caseType, optionCaseType) {
         var isCaseTypeValid = caseType == "ic" || caseType == "mc" || caseType == "sc";
-        
+
         if (!isCaseTypeValid) {
             caseType = "ic";
         }
@@ -127,11 +127,11 @@ var gTabSwitcher = {
         var selectedItem = this.tabTreeView.currentSelectedItem;
         var path = "";
         if (selectedItem) {
-            path = selectedItem.document.file.dirName;
+            path = selectedItem.koDoc.file.dirName;
         }
         document.getElementById("view-path").value = path;
         this.isInputInProgress = false;
-        
+
         return true;
     },
 
@@ -158,11 +158,11 @@ var gTabSwitcher = {
         if (!this.isInputInProgress) {
             var selectedItem = this.tabTreeView.currentSelectedItem;
             if (selectedItem) {
-                document.getElementById("view-path").value = selectedItem.document.file.dirName;
+                document.getElementById("view-path").value = selectedItem.koDoc.file.dirName;
             }
         }
     },
-    
+
     onDblClick : function() {
         this.onAccept();
     },
