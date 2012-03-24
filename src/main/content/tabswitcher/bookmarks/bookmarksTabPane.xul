@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE overlay SYSTEM "chrome://tabswitcher/locale/bookmarks.dtd">
+<?xml-stylesheet href="chrome://komodo/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://komodo/skin/global/global.css" type="text/css"?>
+<?xml-stylesheet href="chrome://komodo/skin/toolbar.css" type="text/css"?>
+<?xml-stylesheet href="chrome://komodo/skin/platform.css" type="text/css"?>
+<?xml-stylesheet href="chrome://komodo/skin/bindings/sidebar.css" type="text/css"?>
+
+<?xml-stylesheet href="chrome://tabswitcher/skin/bookmarks.css" type="text/css"?>
+
+<page xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+    <vbox flex="1">
+        <hbox align="center">
+            <label id="viewswitcher-bookmark-status"
+                   flex="1"
+                   bookmarklabel="&viewswitcher.bookmark.found;"/>
+            <separator flex="1"/>
+            <toolbarbutton id="viewswitcher_bookmarks-refresh"
+                    class="button-viewswitcher-refresh"
+                    tooltiptext="&viewswitcher.bookmark.refresh.tooltip;"
+                    oncommand="gViewSwitcherBookmarks.onRefresh();"/>
+            <toolbarbutton id="viewswitcher_bookmarks-remove-selected"
+                    class="button-viewswitcher-remove-selected"
+                    tooltiptext="&viewswitcher.bookmark.remove.selected.label;"
+                    oncommand="gViewSwitcherBookmarks.onRemoveSelected();"/>
+            <toolbarbutton id="viewswitcher_bookmarks-remove-all"
+                    class="button-viewswitcher-remove-all"
+                    tooltiptext="&viewswitcher.bookmark.remove.all.label;"
+                    oncommand="gViewSwitcherBookmarks.onRemoveAll();"/>
+        </hbox>
+    <tree id="viewswitcher_bookmarks-tree"
+          flex="1"
+          seltype="multiple">
+        <treecols>
+            <treecol primary="true"
+                     crop="center"
+                     flex="8"
+                     persist="width"
+                     id="viewswitcher_bookmarks-filename"
+                     label="&viewswitcher.bookmark.file.label;" />
+            <splitter class="tree-splitter" />
+            <treecol id="viewswitcher_bookmarks-linenum"
+                     label="&viewswitcher.bookmark.line.number.label;"
+                     persist="width"/>
+            <splitter class="tree-splitter" />
+            <treecol id="viewswitcher_bookmarks-content"
+                     flex="12"
+                     label="&viewswitcher.bookmark.line.content.label;"
+                     persist="width" />
+        </treecols>
+        <treechildren id="viewswitcher_bookmarks-treechildren"
+                      flex="1"
+                      ondblclick="gViewSwitcherBookmarks.onDblClick();"/>
+    </tree>
+    </vbox>
+</page>

@@ -6,18 +6,18 @@
 <overlay id="viewSwitcherBookmarkOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <!-- Komodo specific code -->
-  <script type="application/x-javascript"
-          src="chrome://komodo/content/library/logging.js" />
-  <script type="application/x-javascript"
-          src="chrome://komodo/content/library/uilayout.js" />
+    <!-- Komodo specific code -->
+    <script type="application/x-javascript"
+            src="chrome://komodo/content/library/logging.js" />
+    <script type="application/x-javascript"
+            src="chrome://komodo/content/library/uilayout.js" />
 
-  <script type="application/x-javascript"
-          src="chrome://tabswitcher/content/common.js" />
-  <script type="application/x-javascript"
-          src="chrome://tabswitcher/content/bookmarks/bookmarksTreeview.js" />
-  <script type="application/x-javascript"
-          src="chrome://tabswitcher/content/bookmarks/bookmarksOverlay.js" />
+    <script type="application/x-javascript"
+            src="chrome://tabswitcher/content/common.js" />
+    <script type="application/x-javascript"
+            src="chrome://tabswitcher/content/bookmarks/bookmarksTreeview.js" />
+    <script type="application/x-javascript"
+            src="chrome://tabswitcher/content/bookmarks/bookmarksOverlay.js" />
 
     <menupopup id="menu_view_tabs_popup">
         <menuitem id="show_viewswitcher_bookmarks_tab2"
@@ -96,6 +96,5 @@
             </vbox>
         </tabpanel>
     </tabpanels>
-    
+
 </overlay>
-   

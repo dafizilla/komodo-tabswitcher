@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE overlay SYSTEM "chrome://tabswitcher/locale/bookmarks.dtd">
+<?xml-stylesheet href="chrome://tabswitcher/skin/bookmarks.css" type="text/css"?>
+
+<overlay id="viewSwitcherBookmarkOverlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+    <!-- Komodo specific code -->
+    <script type="application/x-javascript"
+            src="chrome://komodo/content/library/logging.js" />
+    <script type="application/x-javascript"
+            src="chrome://komodo/content/library/uilayout.js" />
+
+    <script type="application/x-javascript"
+            src="chrome://tabswitcher/content/common.js" />
+    <script type="application/x-javascript"
+            src="chrome://tabswitcher/content/bookmarks/bookmarksTreeview.js" />
+    <script type="application/x-javascript"
+            src="chrome://tabswitcher/content/bookmarks/bookmarksOverlay.js" />
+
+    <ko-pane id="workspace_bottom_area">
+        <browser type="ko-widget" id="viewswitcher_bookmarks_tab"
+                 label="&viewswitcher.bookmark.tab.title;"
+                 position="10" insertbefore="codebrowserviewbox"
+                 src="chrome://tabswitcher/content/bookmarks/bookmarksTabPane.xul"/>
+    </ko-pane>
+
+</overlay>

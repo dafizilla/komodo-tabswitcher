@@ -1,5 +1,5 @@
 <!DOCTYPE extension [
-<!ENTITY extension.version "0.9.1">
+<!ENTITY extension.version "0.10.0">
 ]>
 
 <extension name="tabswitcher">
@@ -41,7 +41,8 @@
 
     <overlays>
         <overlay description="Editor" uri="chrome://komodo/content/komodo.xul" value="chrome://tabswitcher/content/tabswitchOverlay.xul" />
-        <overlay description="Editor" uri="chrome://komodo/content/komodo.xul" value="chrome://tabswitcher/content/bookmarks/bookmarksOverlay.xul" />
+        <overlay description="Editor" uri="chrome://komodo/content/komodo.xul" value="chrome://tabswitcher/content/bookmarks/bookmarksOverlay.xul appversion&lt;7a1" />
+        <overlay description="Editor" uri="chrome://komodo/content/komodo.xul" value="chrome://tabswitcher/content/bookmarks/bookmarksOverlay_7.xul appversion&gt;7a1" />
         <overlay description="Menu" uri="chrome://komodo/content/komodo.xul" value="chrome://tabswitcher/content/tabswitchMenuKO5.xul appversion&lt;6b1" />
         <overlay description="Menu" uri="chrome://komodo/content/komodo.xul" value="chrome://tabswitcher/content/tabswitchMenuKO6.xul appversion&gt;6b1" />
         <overlay description="Preferences" uri="chrome://komodo/content/pref/pref.xul" value="chrome://tabswitcher/content/pref/prefOverlay.xul" />
@@ -52,20 +53,21 @@
             <description>Komodo IDE</description>
             <id>{36E66FA0-F259-11D9-850E-000D935D3368}</id>
             <minVersion>5.0</minVersion>
-            <maxVersion>6.*</maxVersion>
+            <maxVersion>7.*</maxVersion>
         </application>
 
         <application>
             <description>Komodo Edit</description>
             <id>{b1042fb5-9e9c-11db-b107-000d935d3368}</id>
             <minVersion>5.0</minVersion>
-            <maxVersion>6.*</maxVersion>
+            <maxVersion>7.*</maxVersion>
         </application>
     </compatibility>
 
     <contributors>
         <contributor>Nathan Rijksen for sort tabs idea and code</contributor>
         <contributor>Adam Groszer for granularity code</contributor>
+        <contributor>Adam Groszer for KO7 compatibility</contributor>
     </contributors>
 
     <translators>

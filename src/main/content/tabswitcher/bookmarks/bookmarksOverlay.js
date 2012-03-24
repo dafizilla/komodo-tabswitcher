@@ -35,18 +35,36 @@
 # ***** END LICENSE BLOCK *****
 */
 
+var gViewSwitcherBookmarksLOG = ko.logging.getLogger("ko.extensions.tabswitcher")
+
 var gViewSwitcherBookmarks = {
     onLoad : function() {
         try {
+            var scin = document.getElementById('runoutput-scintilla');
+            if (scin) {
+                // KO6
+                var cdoc = document;
+            } else {
+                // KO7
+                // push ourselves into the ko-pane
+                var widget = document.getElementById("viewswitcher_bookmarks_tab");
+                if (widget) {
+                    widget.contentWindow.gViewSwitcherBookmarks = this;
+                }
+
+                var cdoc = widget.contentDocument;
+            }
             this.treeView = new BookmarksTreeView(
-                    document.getElementById("viewswitcher_bookmarks-tree"));
+                    cdoc.getElementById("viewswitcher_bookmarks-tree"));
+            this.status = cdoc.getElementById("viewswitcher-bookmark-status");
+
             var obs = DafizillaCommon.getObserverService();
             obs.addObserver(this, "view_opened", false);
             obs.addObserver(this, "view_closed", false);
 
             this.addListeners();
         } catch (err) {
-            alert("gViewSwitcherBookmarks onLoad " + err);
+            gViewSwitcherBookmarksLOG.exception(err);
         }
     },
 
@@ -68,23 +86,22 @@ var gViewSwitcherBookmarks = {
                 break;
         }
         } catch (err) {
-            alert(topic + "--" + data + "\n" + err);
+            gViewSwitcherBookmarksLOG.exception(err);
         }
     },
 
     onRefresh : function() {
         this.treeView.fillBookmarksArray();
         this.treeView.refresh();
-        var status = document.getElementById("viewswitcher-bookmark-status");
 
         var label = "";
         if (this.treeView.viewWithBookmarkCount) {
-            label = status.getAttribute("bookmarklabel")
-                            .replace("%1", this.treeView.items.length)
-                            .replace("%2", this.treeView.viewWithBookmarkCount)
-                            .replace("%3", this.treeView.viewCount);
+            label = this.status.getAttribute("bookmarklabel")
+                               .replace("%1", this.treeView.items.length)
+                               .replace("%2", this.treeView.viewWithBookmarkCount)
+                               .replace("%3", this.treeView.viewCount);
         }
-        status.setAttribute("value", label);
+        this.status.setAttribute("value", label);
     },
 
     onRemoveSelected : function() {
