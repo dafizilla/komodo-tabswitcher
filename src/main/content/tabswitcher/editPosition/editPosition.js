@@ -212,11 +212,11 @@ var gEditPosition = {
             };
             //DafizillaCommon.log("pushEdit");
 
-            if (!currentView.document) {
+            if (!currentView.koDoc) {
                 return;
             }
 
-            if (!currentView.document.isDirty) {
+            if (!currentView.koDoc.isDirty) {
                 return;
             }
 
@@ -471,7 +471,7 @@ var gEditPosition = {
                 var text = view.title+" l:"+(item.line+1)+" c:"+(item.col+1);
                 mi.setAttribute("label", text);
                 mi.setAttribute("crop", "center");
-                mi.setAttribute("tooltiptext", view.document.displayPath);
+                mi.setAttribute("tooltiptext", view.koDoc.displayPath);
                 mi.setAttribute("oncommand", command.replace("%1", index));
                 menu.appendChild(mi);
             }
@@ -494,7 +494,7 @@ var gEditPosition = {
             if (editPos) {
                 var currentView = ko.views.manager.currentView;
 
-                if (currentView.document) {
+                if (currentView.koDoc) {
                     var currPos = currentView.scimoz.currentPos;
                     var currLine = currentView.scimoz.lineFromPosition(currPos);
 
@@ -589,7 +589,7 @@ var gEditPosition = {
 
     viewOpened : function(view) {
         try {
-            if (view.document) {
+            if (view.koDoc) {
                 if (this.prefs.editShowMarkers) {
                     var scimoz = view.scimoz;
 
