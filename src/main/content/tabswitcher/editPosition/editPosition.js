@@ -90,6 +90,8 @@ EditPosFixedSizeStack.prototype = {
 }
 
 const MARKNUM_EDITPOSLOC = 14;
+const EDITPOS_MARKERMASK = 1<<MARKNUM_EDITPOSLOC;
+const EDITPOS_MARGIN = 2;	// which scintilla margin to use
 
 var gEditPosition = {
     lastEditStack : new EditPosFixedSizeStack(10),
@@ -593,14 +595,13 @@ var gEditPosition = {
                 if (this.prefs.editShowMarkers) {
                     var scimoz = view.scimoz;
 
-                    scimoz.markerDefine(MARKNUM_EDITPOSLOC, scimoz.SC_MARK_CIRCLEPLUS);
                     scimoz.markerSetFore(MARKNUM_EDITPOSLOC, this.fgColor); // black
                     scimoz.markerSetBack(MARKNUM_EDITPOSLOC, this.bgColor); // cyan
 
-                    //scimoz.setMarginMaskN(2, 0x0FFFF);
-                    scimoz.setMarginMaskN(2,
-                                          ko.markers.MARKERS_MASK_SYMBOLS |
-                                          (1 << MARKNUM_EDITPOSLOC));
+                    mask = scimoz.getMarginMaskN(EDITPOS_MARGIN) | EDITPOS_MARKERMASK
+                    scimoz.setMarginMaskN(EDITPOS_MARGIN, mask);
+
+                    scimoz.markerDefine(MARKNUM_EDITPOSLOC, scimoz.SC_MARK_CIRCLEPLUS);
 
                     //ko.statusBar.AddMessage(
                     //    "history marker patch done",
