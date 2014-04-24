@@ -596,12 +596,13 @@ var gEditPosition = {
                     var scimoz = view.scimoz;
 
                     scimoz.markerSetFore(MARKNUM_EDITPOSLOC, this.fgColor); // black
-                    scimoz.markerSetBack(MARKNUM_EDITPOSLOC, this.bgColor); // cyan
+                    //scimoz.markerSetBack(MARKNUM_EDITPOSLOC, this.bgColor); // cyan
 
                     mask = scimoz.getMarginMaskN(EDITPOS_MARGIN) | EDITPOS_MARKERMASK
                     scimoz.setMarginMaskN(EDITPOS_MARGIN, mask);
 
-                    scimoz.markerDefine(MARKNUM_EDITPOSLOC, scimoz.SC_MARK_CIRCLEPLUS);
+                    scimoz.markerDefine(MARKNUM_EDITPOSLOC, scimoz.SC_MARK_CHARACTER+("C".charCodeAt()));
+                    //scimoz.markerDefine(MARKNUM_EDITPOSLOC, scimoz.SC_MARK_CIRCLEPLUS);
 
                     //ko.statusBar.AddMessage(
                     //    "history marker patch done",
