@@ -151,5 +151,9 @@ var gViewSwitcherBookmarks = {
     }
 }
 
-window.addEventListener("load", function(event) {gViewSwitcherBookmarks.onLoad(event)}, false);
+window.addEventListener("load",
+    function(event){setTimeout("gViewSwitcherBookmarks.onLoad()", 3000);},
+    false);
+
+//window.addEventListener("load", function(event) {gViewSwitcherBookmarks.onLoad(event)}, false);
 window.addEventListener("unload", function(event) {gViewSwitcherBookmarks.onUnLoad(event)}, false);
